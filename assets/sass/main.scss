@@ -1,0 +1,28 @@
+@import 'base/variables';
+@import 'base/settings';
+@import 'base/mixins';
+@import 'base/reset';
+
+body{
+	background: #eee;
+	font-family: 'Roboto', sans-serif;
+	a {
+		color: $link_default_color_hover;
+	}
+}
+
+.b-container {
+	padding: 0 15px;
+	@include desktop-1024 {
+		width: 960px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+	&_mobile-indents-none {
+		padding: 0;
+		@include desktop-1024 {
+			padding: 0 15px;
+		}
+	}
+
+}
