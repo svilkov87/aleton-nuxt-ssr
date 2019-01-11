@@ -2,12 +2,6 @@
 	<section class="container">
 	<div>
 		<navbar/>
-		<h1 class="title">
-		Patents page
-		</h1>
-		<h2 class="subtitle">
-			This page about patents
-		</h2>
 		<div class="links">
 			<nuxt-link to="/">Главная</nuxt-link>
 		</div>

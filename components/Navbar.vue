@@ -1,26 +1,20 @@
 <template>
 	<header>
 		<nav class="b-nav">
-			<span class="b-nav__logo"
-				v-bind:class="{ 'b-nav__logo_active-logo':activeToggle }"			
-			>{{ title }}</span>
+			<span class="b-nav__logo">{{ title }}</span>
 			<span class="b-nav__text">{{ description }}</span>
 			<ul class="b-nav__ul">
 				<li v-if="this.$route.fullPath !==  '/' " class="b-nav__li b-nav__li_dropdown-link"
 					@click="menuToggle()"
 				>
-					<span class="b-nav__span"
-						v-bind:class="{ 'b-nav__span_active-nav-span':     activeToggle }"
-					>
+					<span class="b-nav__span">
 					услуги
 					</span>
 				</li>
 				<li v-else class="b-nav__li"
 					@click="menuToggle()"
 				>
-					<span class="b-nav__span"
-						v-bind:class="{ 'b-nav__span_active-nav-span':     activeToggle }"
-					>
+					<span class="b-nav__span">
 					Контакты
 					</span>
 				</li>
@@ -30,6 +24,11 @@
 			v-bind:class="{ 'b-menu_active-toggle':activeMenu }"
 		>
 			<div class="b-container">
+				<div class="b-menu__icon-close"
+					@click="menuToggle()"
+				>
+					<i class="b-menu__close"></i>
+				</div>
 				<ul v-if="this.$route.fullPath !==  '/' "  class="b-menu__ul">
 					<li  class="b-menu__li" 
 						v-for="( menuItem ) in menuData()"
@@ -145,9 +144,11 @@ export default {
 @import "~/assets/sass/base/_variables.scss";
 
 .b-nav {
+	position: fixed;
 	display: flex;
 	justify-content: space-between;
 	background: $nav_bg;
+	width: 100%;
 	height: $nav_height;
 	padding: 0 15px;
 	@include desktop-1024 {
@@ -262,16 +263,74 @@ export default {
 }
 
 .b-menu {
-	position: absolute;
+	position: fixed;
 	top: -100%;
 	left: 0;
 	right: 0;
 	height: 100vh;
 	background: #1f1f1f;
-	transition: all $transition_default ease-in-out;
+	transition:  $transition_default cubic-bezier(.77,0, .175,1);
 
 	&_active-toggle {
 		top: 0;
+		bottom: 0;
+	}
+
+	&__icon-close {
+		cursor: pointer;
+		width: 65px;
+		height: 65px;
+		top: 45px;
+		right: 30px;
+		position: absolute;
+		@include desktop-1024 {
+			right: 65px;
+
+			&:hover .b-menu__close {
+				&:before {
+					top: 20px;
+					transform: rotate(45deg);
+				}
+				&:after {
+					transform: rotate(-45deg);
+				}
+			}
+		}
+	}
+
+	&__close {
+		display: block;
+		overflow: visible;
+		background: #fff;
+		&:before {
+			content: '';
+			transform: rotate(45deg);
+			background: #fff;
+			width: 25px;
+			position: absolute;
+			top: 10px;
+			height: 2px;
+			@include desktop-1024 {
+				width: 45px;
+				transform: rotate(0);
+				transition:  $transition_default cubic-bezier(.77,0, .175,1);
+			}
+		}
+		&:after {
+			content: '';
+			transform: rotate(-45deg);
+			background: #fff;
+			width: 25px;
+			position: absolute;
+			top: 10px;
+			height: 2px;
+			@include desktop-1024 {
+				width: 45px;
+				transform: rotate(0);
+				top: 23px;
+				transition:  $transition_default cubic-bezier(.77,0, .175,1);
+			}
+		}
 	}
 
 	&__ul {

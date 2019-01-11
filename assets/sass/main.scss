@@ -4,7 +4,7 @@
 @import 'base/reset';
 
 body{
-	background: #eee;
+	// background: #eee;
 	font-family: 'Roboto', sans-serif;
 	a {
 		color: $link_default_color_hover;
@@ -12,7 +12,7 @@ body{
 }
 
 .page-enter-active, .page-leave-active {
-	transition: opacity .2s;
+	transition: opacity .8s;
 }
 .page-enter, .page-leave-active {
 	opacity: 0;

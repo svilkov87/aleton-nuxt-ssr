@@ -1,27 +1,23 @@
 <template>
-  	<section class="container">
+  	<!-- <section class="container"> -->
 		<div>
 			<navbar/>
-		<!-- <logo/> -->
-			<h1 class="title">
-			aleton-nuxt-ssr
-			</h1>
-			<h2 class="subtitle">
-			My mathematical Nuxt.js project
-			</h2>
-			<div class="links">
+			<!-- <div class="links">
 				<nuxt-link to="/patent">Патенты</nuxt-link>
-			</div>
+			</div> -->
+			<mainslider/>
 		</div>
-	</section>
+	<!-- </section> -->
 </template>
 
 <script>
 import Navbar from '~/components/Navbar.vue'
+import Mainslider from '~/components/Mainslider.vue'
 
 export default {
 	components: {
-		Navbar
+		Navbar,
+		Mainslider
 	},
 	data () {
 		return {
