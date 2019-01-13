@@ -281,7 +281,7 @@ export default {
 		width: 65px;
 		height: 65px;
 		top: 45px;
-		right: 30px;
+		right:  0;
 		position: absolute;
 		@include desktop-1024 {
 			right: 65px;
