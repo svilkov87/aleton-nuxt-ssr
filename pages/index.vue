@@ -1,13 +1,8 @@
 <template>
-  	<!-- <section class="container"> -->
-		<div>
-			<navbar/>
-			<!-- <div class="links">
-				<nuxt-link to="/patent">Патенты</nuxt-link>
-			</div> -->
-			<mainslider/>
-		</div>
-	<!-- </section> -->
+	<div>
+		<navbar/>
+		<mainslider/>
+	</div>
 </template>
 
 <script>

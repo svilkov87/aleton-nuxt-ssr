@@ -1,62 +1,56 @@
 <template>
-	<header>
-		<nav class="b-nav">
-			<span class="b-nav__logo">{{ title }}</span>
-			<span class="b-nav__text">{{ description }}</span>
-			<ul class="b-nav__ul">
-				<li v-if="this.$route.fullPath !==  '/' " class="b-nav__li b-nav__li_dropdown-link"
-					@click="menuToggle()"
-				>
-					<span class="b-nav__span">
-					услуги
-					</span>
-				</li>
-				<li v-else class="b-nav__li"
-					@click="menuToggle()"
-				>
-					<span class="b-nav__span">
-					Контакты
-					</span>
-				</li>
-			</ul>
-		</nav>
-		<section class="b-menu"
-			v-bind:class="{ 'b-menu_active-toggle':activeMenu }"
+	<div class="b-main">
+		<div class="b-nav"
+			v-bind:class="{ 'b-nav_down-menu ':this.downMenu }"
 		>
-			<div class="b-container">
-				<div class="b-menu__icon-close"
-					@click="menuToggle()"
+			<span class="b-nav__logo">{{ title }}</span>
+			<span class="b-nav__span-hamburger"
+				@click="menuToggle(), counterToggle()"
+				v-bind:class="{ 'b-nav__span-hamburger_active-toggle ':this.hamburgerToggle }"
+			>
+				<span class="b-nav__span-lines"></span>
+			</span>
+			<div class="b-nav__info-wrapper">
+				<p
+					v-for=" item  in infoData()"
+					:key="item.text"
+					v-bind:class="[ { [item.fadeClass]: !item.isVisible }, item.defaultClass ]"
 				>
-					<i class="b-menu__close"></i>
-				</div>
-				<ul v-if="this.$route.fullPath !==  '/' "  class="b-menu__ul">
-					<li  class="b-menu__li" 
-						v-for="( menuItem ) in menuData()"
-						:key="menuItem.text"
-						v-bind:class="{ 'b-menu__li_fade-effect ':menuItem.isVisible }"
-					>						
+					{{ item.title}}
+				</p>
+			</div>
+
+			<!-- menuinfo -->
+
+			<ul v-if="this.$route.fullPath !==  '/' "  
+				class="b-nav__ul"
+				v-bind:class="{ 'b-nav__ul_active-ul ':!this.fadeContacts }"
+			>
+				<li  class="b-nav__li" 
+					v-for="( menuItem ) in menuData()"
+					:key="menuItem.text"
+					v-bind:class="{ 'b-nav__li_fade-effect ':menuItem.isVisible }"
+				>						
 					<nuxt-link 
 						:to="menuItem.url"
-						exact-active-class="b-menu__active-link"
+						exact-active-class="b-nav__active-link"
 					>
 						{{ menuItem.text }}
 					</nuxt-link>
-					</li>
-				</ul>
-				<ul v-else class="b-menu__ul">
-					<li  class="b-menu__li_contacts">
-						<span class="b-menu__contacts">Контакты</span>
-						<ul class="b-menu__contacts-list">
-							<li class="b-menu__contacts-list-items">603 070 г. Нижний Новгород</li>
-							<li class="b-menu__contacts-list-items">Ул. Мануфактурная, 12</li>
-							<li class="b-menu__contacts-list-items">+7 999 136 38 36</li>
-							<li class="b-menu__contacts-list-items">+7 999 136 12 55</li>
-						</ul>
-					</li>
-				</ul>
+				</li>
+			</ul>
+			<div v-else 
+				class="b-nav__ul"
+				v-bind:class="{ 'b-nav__ul_active-ul ':!this.fadeContacts }"
+			>
+				<span class="b-nav__contacts-item b-nav__contacts-item_header">Контакты</span>
+				<span class="b-nav__contacts-item">603 070 г. Нижний Новгород</span>
+				<span class="b-nav__contacts-item">Ул. Мануфактурная, 12</span>
+				<span class="b-nav__contacts-item">+7 999 136 38 36</span>
+				<span class="b-nav__contacts-item">+7 999 136 12 55</span>
 			</div>
-		</section>
-	</header>
+		</div>
+	</div>
 </template>
 
 <script>
@@ -66,41 +60,58 @@ export default {
 	data () {
 		return {
 			title: 'Алетон',
-			description: 'Помощь в оформлении документов для иностранных граждан.',
-			activeMenu: false,
-			activeToggle: false,
+			downMenu: false,
+			hamburgerToggle: false,
+			counter: 0,
+			fadeContacts: true,
+			fadeSettings: [
+				{
+					title: 'ПОМОЩЬ В ОФОРМЛЕНИИ ДОКУМЕНТОВ ДЛЯ ИНОСТРАННЫХ ГРАЖДАН',
+					defaultClass: 'b-nav__text',
+					fadeClass: 'b-nav__text_fade',
+					isVisible: true,
+					time: 200
+				},
+				{
+					title: 'Работаем с физическими лицами, по безналичному расчету',
+					defaultClass: 'b-nav__cash-term',
+					fadeClass: 'b-nav__cash-term_fade',
+					isVisible: true,
+					time: 300
+				}
+			],
 			menuLists: [
 				{
 					text: 'Главная',
-					dataFade: '300',
+					dataFade: 1500,
 					url: '/',
 					isActive: true,
 					isVisible: false
 				},
 				{
 					text: 'Патенты',
-					dataFade: '500',
+					dataFade: 1600,
 					url: '/patent',
 					isActive: false,
 					isVisible: false
 				},
 				{
 					text: 'Разрешение на временное проживание',
-					dataFade: '700',
+					dataFade: 1700,
 					url: '/rvp',
 					isActive: false,
 					isVisible: false
 				},
 				{
 					text: 'Вид на жительство',
-					dataFade: '900',
+					dataFade: 1800,
 					url: '/vnz',
 					isActive: false,
 					isVisible: false
 				},
 				{
 					text: 'Гражданство',
-					dataFade: '1100',
+					dataFade:  1900,
 					url: '/citizenship',
 					isActive: false,
 					isVisible: false
@@ -109,31 +120,54 @@ export default {
 		}
 	},
 	methods: {
+		counterToggle(){
+			this.counter++;
+			        if ( this.counter % 2 == 0) {
+					console.log('четное')
+					this.fadeContacts = true
+					this.hamburgerToggle = false
+					
+					
+				}
+				else {
+					console.log('не четное')
+					
+					setTimeout( () => 
+						this.fadeContacts = false
+					, 1000 );
+					setTimeout( () => 
+						this.hamburgerToggle = true
+					, 1000 );
+				}
+		},
 		menuToggle() {
-
-			this.activeToggle = !this.activeToggle;
-			this.activeMenu = !this.activeMenu;
+			
+			setTimeout( () => 
+				this.downMenu = !this.downMenu
+			, 600 );
 
 			let arr = this.menuLists;
-
 			arr.forEach( function( item ) {
-
 				setTimeout( () => 
 					item.isVisible = !item.isVisible
 				, item.dataFade );
+			} );
 
+			let arr2 = this.fadeSettings;
+			arr2.forEach( function( item ) {
+				setTimeout( () => 
+				item.isVisible = !item.isVisible
+				, item.time );
 			} );
 
 		},
 		menuData() {
-			// return this.$store.state.menuLists;
 			return this.menuLists;
+		},
+		infoData() {
+			return this.fadeSettings;
 		}
-		// classActive: function ( index ) {
-		// 	this.$store.commit( 'classActive', index );
-		// }
 	}
-
 }
 </script>
 
@@ -143,204 +177,199 @@ export default {
 @import "~/assets/sass/base/_mixins.scss";
 @import "~/assets/sass/base/_variables.scss";
 
-.b-nav {
-	position: fixed;
-	display: flex;
-	justify-content: space-between;
-	background: $nav_bg;
-	width: 100%;
-	height: $nav_height;
-	padding: 0 15px;
+.b-main {
 	@include desktop-1024 {
-		height: 100px;
-		line-height: 100px;
-		padding: 0 50px;
-	}
-	&__logo {
-		font-size: 18px;
-		font-family: "Montserrat", sans-serif;
-		font-weight: 600;
-		text-transform: uppercase;
-		pointer-events: auto;
-		letter-spacing: 2px;
-		z-index: $nav_zindex;
-		line-height: $nav_height;
-		transition: all $transition_default ease-in-out;
-		&_active-logo{
-			color: $nav_color_active;
-		}
-	}
-
-	&__span {
-		position: relative;
-		letter-spacing: 2px;
-		transition: all $transition_default ease-in-out;
-
-		&:before {
-			content: '';
-			visibility: hidden;
-			opacity: 0;
-			border-radius: 50%;
-			border: 1px solid #000;
-			position: absolute;
-			top: 5px;
-			left: -10px;
-			width: 10px;
-			height: 10px;
-		}
-		&:after {
-			content: '';
-			visibility: hidden;
-			opacity: 0;
-			position: absolute;
-			top: 10px;
-			left: 10px;
-			width: 2px;
-			height: 1px;
-			background: #000;
-			transition: all $transition_default ease-in-out;
-		}
-		&_active-nav-span {
-			color: $nav_color_active;
-			&:after {
-				content: '';
-				visibility: visible;
-				opacity: 1;
-				position: absolute;
-				width: 80px;
-				background: $nav_color_active;
-			}
-			&:hover::after {
-				width: 0;
-			}
-			&:before {
-				border: 1px solid $nav_color_active;
-			}
-		}
-	}
-
-	&__text {
-		letter-spacing: 2px;
-		display: none;
-		@include desktop-1024 {
-			display: block;
-		}
-	}
-	&__ul {
 		display: flex;
-		z-index: $nav_zindex;
-	}
-	&__li {
-		position: relative;
-		padding-left: 15px;
-		line-height: $nav_height;
-		transition: all $transition_default ease-in-out;
-		cursor: pointer;
-
-		&_dropdown-link {
-			min-width: 100px;
-			line-height: $nav_height;
-			transition: all $transition_default ease-in-out;
-
-			&:hover .b-nav__span {
-				padding-left: 20px;
-				&:before {
-					visibility: visible;
-					opacity: 1;
-					animation: bubble $transition_default ease-in-out;
-					@keyframes bubble {
-						25% {
-							transform: scale(2);
-						}
-						100% {
-							transform: scale(.89);
-						}
-					}
-				}
-			}
-		}
 	}
 }
 
-.b-menu {
-	position: fixed;
-	top: -100%;
+.b-nav {
+	position: absolute;
+	top: -250px;
 	left: 0;
-	right: 0;
-	height: 100vh;
-	background: #1f1f1f;
-	transition:  $transition_default cubic-bezier(.77,0, .175,1);
-
-	&_active-toggle {
+	width: 100%;
+	height: 650px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	background: #3C81B3;
+	transition:  $transition_default ease-out;
+	transition-delay: 0s;
+	@include desktop-1024 {
+		top: 0;
+		height: 100vh;
+		width: 50%;
+		align-items: center;
+	}
+	&_down-menu {
 		top: 0;
 		bottom: 0;
-	}
-
-	&__icon-close {
-		cursor: pointer;
-		width: 65px;
-		height: 65px;
-		top: 45px;
-		right:  0;
-		position: absolute;
+		height: 100%;
+		background: #000;
+		align-items: center;
+		transition-delay: $transition_default;
 		@include desktop-1024 {
-			right: 65px;
-
-			&:hover .b-menu__close {
-				&:before {
-					top: 20px;
-					transform: rotate(45deg);
-				}
-				&:after {
-					transform: rotate(-45deg);
-				}
-			}
+			width: 100%;
+			height: 100vh;
 		}
 	}
-
-	&__close {
-		display: block;
-		overflow: visible;
-		background: #fff;
+	&__logo {
+		color: $nav_color;
+		position: fixed;
+		top: 35px;
+		left: 15px;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 2px;
+		@include desktop-1024 {
+			top: $nav_desktop_indent;
+			left: $nav_desktop_indent;
+		}
+	}
+	
+	&__span-hamburger {
+		position: fixed;
+		display: flex;
+    		justify-content: center;
+		top: 33px;
+		right: 20px;
+		width: 30px;
+		height: 20px;
+		// border: 1px solid #ccc;
+		transform: rotate(90deg);
+		transition:  $transition_default ease-out;
+		@include desktop-1024 {
+			cursor: pointer;
+			position: absolute;
+			top: 147px;
+			right: $nav_desktop_indent;
+		}
+		&_active-toggle{
+			@include desktop-1024 {
+				background: transparent;
+				transform: rotate(0);
+					.b-nav__span-lines {
+						border-radius: 0%;
+						width: 25px;
+						height: 2px;
+						&:before {
+							border-radius: 0%;
+							width: 25px;
+							height: 2px;
+						}
+						&:after {
+							border-radius: 0%;
+							width: 25px;
+							height: 2px;
+						}
+					}
+			}
+			
+		}
+	}
+	&__span-lines {
+		position: absolute;
+		top: 0;
+		// width: 30px;
+		// height: 2px;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: $nav_color;
 		&:before {
 			content: '';
-			transform: rotate(45deg);
-			background: #fff;
-			width: 25px;
 			position: absolute;
-			top: 10px;
-			height: 2px;
-			@include desktop-1024 {
-				width: 45px;
-				transform: rotate(0);
-				transition:  $transition_default cubic-bezier(.77,0, .175,1);
-			}
+			top: 8px;
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+			background: $nav_color;
 		}
 		&:after {
 			content: '';
-			transform: rotate(-45deg);
-			background: #fff;
-			width: 25px;
 			position: absolute;
-			top: 10px;
-			height: 2px;
+			top: 16px;
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+			background: $nav_color;
+		}
+		@include desktop-1024 {
+		}
+	}
+	&__info-wrapper {
+		@include desktop-1024 {
+			position: fixed;
+			min-height: 450px;
+			left: $nav_desktop_indent;
+		}
+	}
+	&__text {
+		position: absolute;
+		bottom: 150px;
+		left: 15px;
+		max-width: 330px;
+		color: $nav_color;
+		font-size: 24px;
+		font-weight: bold;
+		letter-spacing: 2px;
+		transition: all $transition_default ease-in-out;
+		@include desktop-1024 {
+			position: static;
+			transform: translateY(45px);
+			font-size: 48px;
+		}
+		&_fade {
+			opacity: 0;
+			bottom: 250px;
 			@include desktop-1024 {
-				width: 45px;
-				transform: rotate(0);
-				top: 23px;
-				transition:  $transition_default cubic-bezier(.77,0, .175,1);
+				transform: translateY(90px);				
 			}
 		}
 	}
-
-	&__ul {
-		padding-top: 140px;
+	&__cash-term {
+		position: absolute;
+		bottom: 65px;
+		left: 15px;
+		max-width: 330px;
+		color: $nav_color;
+		font-size: 18px;
+		font-weight: bold;
+		letter-spacing: 2px;
+		transition: all $transition_default ease-in-out;
 		@include desktop-1024 {
-			padding-top: 170px;
+			opacity: .75;
+			position: static;
+			transform: translateY(70px);
+		}
+		&_fade {
+			opacity: 0;
+			bottom: 150px;
+			@include desktop-1024 {
+				transform: translateY(140px) !important;
+			}
+		}
+	}
+	&__ul {
+		opacity: 0;
+		visibility: hidden;
+		transform: translateX(-375px);
+		max-width: 330px;
+		display: flex;
+		flex-direction: column;
+		transition: all $transition_default ease-in-out;
+		@include desktop-1024 {
+			max-width: 100%;
+			transform: translateY(-100px);
+		}
+		&_active-ul {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(15px);
 		}
 	}
 
-	&__contacts-list-items {
+	&__contacts-item {
 		color: #fff;
 		line-height: 36px;
 		letter-spacing: 2px;
@@ -348,6 +377,11 @@ export default {
 			opacity: 0.8;
 			line-height: 50px;
 			font-size: 24px;
+		}
+		&_header {
+			font-weight: bold;
+			font-size: 36px;
+			margin-bottom: 25px;
 		}
 	}
 
@@ -429,26 +463,6 @@ export default {
 			opacity: 0.45;
 			font-size: 24px;
 			padding-bottom: 10px;
-			letter-spacing: 6px;
-			font-weight: 500;
-		}
-	}
-
-	&__contacts {
-		width: 100%;
-		color: #FFFFFF;
-		cursor: pointer;
-		display: block;
-		font-family: "Montserrat", sans-serif;
-		text-decoration: none;
-		text-transform: uppercase;
-		transition: all $transition_default ease-in-out;
-		margin-bottom: 25px;
-		@include desktop-1024 {
-			opacity: 0.8;
-			font-size: 24px;
-			// font-size: 50px;
-			line-height: 50px;
 			letter-spacing: 6px;
 			font-weight: 500;
 		}

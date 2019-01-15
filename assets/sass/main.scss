@@ -11,6 +11,10 @@ body{
 	}
 }
 
+* {
+	box-sizing: border-box;
+}
+
 .page-enter-active, .page-leave-active {
 	transition: opacity .8s;
 }
