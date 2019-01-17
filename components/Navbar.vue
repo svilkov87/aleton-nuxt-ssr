@@ -79,7 +79,6 @@ export default {
 			downMenu: false,
 			hamburgerToggle: false,
 			counter: 0,
-			isStopInfo: false,
 			fadeContacts: true,
 			// 
 			isDownMenu: false,
@@ -145,6 +144,7 @@ export default {
 	methods: {
 		toggleMenu() {
 			this.counter++;
+			this.hamburgerToggle = !this.hamburgerToggle;
 			// this.isDownMenu = !this.isDownMenu;
 			// this.isShowList = !this.isShowList;
 			// this.isShowInfo = !this.isShowInfo;
@@ -364,13 +364,6 @@ export default {
 		&_fade {
 			opacity: 0;
 			visibility: hidden;
-			// @include desktop-1024 {
-			// 	opacity: 1;
-			// 	visibility: visible;
-			// 	position: fixed;
-			// 	min-height: 450px;
-			// 	left: $nav_desktop_indent;
-			// }
 		}
 	}
 	&__text {
