@@ -1,16 +1,22 @@
 <template>
 	<div class="b-main">
 		<div class="b-nav"
-			v-bind:class="{ 'b-nav_down-menu ':this.downMenu }"
+			v-bind:class="[ 
+				this.isCompactMenu
+				? {'b-nav_compact-menu ':this.isCompactMenu} 
+				: { 'b-nav_down-menu ':this.isDownMenu }
+			]"
 		>
 			<span class="b-nav__logo">{{ title }}</span>
 			<span class="b-nav__span-hamburger"
-				@click="menuToggle(), counterToggle()"
+				@click="toggleMenu()"
 				v-bind:class="{ 'b-nav__span-hamburger_active-toggle ':this.hamburgerToggle }"
 			>
 				<span class="b-nav__span-lines"></span>
 			</span>
-			<div class="b-nav__info-wrapper">
+			<div class="b-nav__info-wrapper"
+				v-bind:class="[{ 'b-nav__info-wrapper_fade': !this.isShowInfo }]"
+			>
 				<p
 					v-for=" item  in infoData()"
 					:key="item.text"
@@ -19,21 +25,31 @@
 					{{ item.title}}
 				</p>
 			</div>
-
-			<!-- menuinfo -->
-
+			<div class="b-nav__service-button"
+				@click="compactMenu()"
+			>
+				перейти к услугам
+			</div>
+			<nuxt-link 
+				to="/patent"
+				class="b-nav__test-link"
+			>
+				патенты
+			</nuxt-link>
 			<ul v-if="this.$route.fullPath !==  '/' "  
 				class="b-nav__ul"
-				v-bind:class="{ 'b-nav__ul_active-ul ':!this.fadeContacts }"
+				v-bind:class="{ 'b-nav__ul_active-ul ':this.isShowList }"
 			>
 				<li  class="b-nav__li" 
 					v-for="( menuItem ) in menuData()"
 					:key="menuItem.text"
 					v-bind:class="{ 'b-nav__li_fade-effect ':menuItem.isVisible }"
+					@click="disactiveMenu()"
 				>						
 					<nuxt-link 
 						:to="menuItem.url"
 						exact-active-class="b-nav__active-link"
+						@click="disactiveMenu()"
 					>
 						{{ menuItem.text }}
 					</nuxt-link>
@@ -41,7 +57,7 @@
 			</ul>
 			<div v-else 
 				class="b-nav__ul"
-				v-bind:class="{ 'b-nav__ul_active-ul ':!this.fadeContacts }"
+				v-bind:class="{ 'b-nav__ul_active-ul ':this.isShowList }"
 			>
 				<span class="b-nav__contacts-item b-nav__contacts-item_header">Контакты</span>
 				<span class="b-nav__contacts-item">603 070 г. Нижний Новгород</span>
@@ -63,7 +79,14 @@ export default {
 			downMenu: false,
 			hamburgerToggle: false,
 			counter: 0,
+			isStopInfo: false,
 			fadeContacts: true,
+			// 
+			isDownMenu: false,
+			isCompactMenu: false,
+			isShowInfo: true,
+			isShowList: false,
+			// 
 			fadeSettings: [
 				{
 					title: 'ПОМОЩЬ В ОФОРМЛЕНИИ ДОКУМЕНТОВ ДЛЯ ИНОСТРАННЫХ ГРАЖДАН',
@@ -120,52 +143,38 @@ export default {
 		}
 	},
 	methods: {
-		counterToggle(){
+		toggleMenu() {
 			this.counter++;
-			        if ( this.counter % 2 == 0) {
-					console.log('четное')
-					this.fadeContacts = true
-					this.hamburgerToggle = false
-					
-					
-				}
-				else {
-					console.log('не четное')
-					
-					setTimeout( () => 
-						this.fadeContacts = false
-					, 1000 );
-					setTimeout( () => 
-						this.hamburgerToggle = true
-					, 1000 );
-				}
+			this.isDownMenu = !this.isDownMenu;
+			this.isShowList = !this.isShowList;
+			this.isShowInfo = !this.isShowInfo;
+			this.isCompactMenu = false;
+
+			if ( this.counter % 2 != 0 ) {
+				console.log('не четное')
+				this.isShowInfo = false;
+			} else {
+
+				console.log(' четное')
+				this.isShowInfo = true;
+			}
+
 		},
-		menuToggle() {
-			
-			setTimeout( () => 
-				this.downMenu = !this.downMenu
-			, 600 );
-
-			let arr = this.menuLists;
-			arr.forEach( function( item ) {
-				setTimeout( () => 
-					item.isVisible = !item.isVisible
-				, item.dataFade );
-			} );
-
-			let arr2 = this.fadeSettings;
-			arr2.forEach( function( item ) {
-				setTimeout( () => 
-				item.isVisible = !item.isVisible
-				, item.time );
-			} );
-
+		compactMenu() {
+			this.counter = 2;
+			this.isCompactMenu = true;
+			this.isShowInfo = false;
+			this.isDownMenu = false;
+			this.isShowList =false;
 		},
 		menuData() {
 			return this.menuLists;
 		},
 		infoData() {
 			return this.fadeSettings;
+		},
+		disactiveMenu() {
+			this.downMenu = false;
 		}
 	}
 }
@@ -192,9 +201,9 @@ export default {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	background: #3C81B3;
+	background: $nav_bg;
 	transition:  $transition_default ease-out;
-	transition-delay: 0s;
+	transition-delay: .4s;
 	@include desktop-1024 {
 		top: 0;
 		height: 100vh;
@@ -207,16 +216,38 @@ export default {
 		height: 100%;
 		background: #000;
 		align-items: center;
-		transition-delay: $transition_default;
+		// transition-delay: $transition_default;
 		@include desktop-1024 {
 			width: 100%;
 			height: 100vh;
 		}
 	}
+	&_compact-menu {
+		top: -560px;
+	}
+	&__test-link {
+		position: absolute;
+		bottom: -95px;
+		right: 25px;
+		line-height: 65px;
+	}
 	&__logo {
 		color: $nav_color;
 		position: fixed;
 		top: 35px;
+		left: 15px;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 2px;
+		@include desktop-1024 {
+			top: $nav_desktop_indent;
+			left: $nav_desktop_indent;
+		}
+	}
+	&__logo-2 {
+		color: $nav_color;
+		position: fixed;
+		top: 55px;
 		left: 15px;
 		text-transform: uppercase;
 		font-weight: bold;
@@ -235,7 +266,6 @@ export default {
 		right: 20px;
 		width: 30px;
 		height: 20px;
-		// border: 1px solid #ccc;
 		transform: rotate(90deg);
 		transition:  $transition_default ease-out;
 		@include desktop-1024 {
@@ -303,6 +333,9 @@ export default {
 			min-height: 450px;
 			left: $nav_desktop_indent;
 		}
+		&_fade {
+			display: none;
+		}
 	}
 	&__text {
 		position: absolute;
@@ -349,6 +382,14 @@ export default {
 				transform: translateY(140px) !important;
 			}
 		}
+	}
+	&__service-button {
+		position: absolute;
+		bottom: -65px;
+		right: 25px;
+		line-height: 65px;
+		color: $nav_bg;
+		background: #fff;
 	}
 	&__ul {
 		opacity: 0;
