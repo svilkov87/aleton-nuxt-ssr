@@ -106,35 +106,35 @@ export default {
 			menuLists: [
 				{
 					text: 'Главная',
-					dataFade: 1500,
+					dataFade: 600,
 					url: '/',
 					isActive: true,
 					isVisible: false
 				},
 				{
 					text: 'Патенты',
-					dataFade: 1600,
+					dataFade: 700,
 					url: '/patent',
 					isActive: false,
 					isVisible: false
 				},
 				{
 					text: 'Разрешение на временное проживание',
-					dataFade: 1700,
+					dataFade: 800,
 					url: '/rvp',
 					isActive: false,
 					isVisible: false
 				},
 				{
 					text: 'Вид на жительство',
-					dataFade: 1800,
+					dataFade: 900,
 					url: '/vnz',
 					isActive: false,
 					isVisible: false
 				},
 				{
 					text: 'Гражданство',
-					dataFade:  1900,
+					dataFade:  1000,
 					url: '/citizenship',
 					isActive: false,
 					isVisible: false
@@ -145,18 +145,44 @@ export default {
 	methods: {
 		toggleMenu() {
 			this.counter++;
-			this.isDownMenu = !this.isDownMenu;
-			this.isShowList = !this.isShowList;
-			this.isShowInfo = !this.isShowInfo;
+			// this.isDownMenu = !this.isDownMenu;
+			// this.isShowList = !this.isShowList;
+			// this.isShowInfo = !this.isShowInfo;
 			this.isCompactMenu = false;
 
+			let arr = this.menuLists;
+			arr.forEach( function( item ) {
+				setTimeout( () => 
+					item.isVisible = !item.isVisible
+				, item.dataFade );
+			} );
+
 			if ( this.counter % 2 != 0 ) {
+
 				console.log('не четное')
-				this.isShowInfo = false;
+				setTimeout( () => 
+					this.isDownMenu = true
+				, 200 );
+		
+				this.isShowInfo = false
+
+				setTimeout( () => 
+					this.isShowList = true
+				, 600 );
+
 			} else {
 
 				console.log(' четное')
-				this.isShowInfo = true;
+
+				this.isShowList = false
+
+				setTimeout( () => 
+					this.isDownMenu = false
+				, 400 );
+
+				setTimeout( () => 
+					this.isShowInfo = true
+				, 800 );
 			}
 
 		},
@@ -203,7 +229,7 @@ export default {
 	justify-content: center;
 	background: $nav_bg;
 	transition:  $transition_default ease-out;
-	transition-delay: .4s;
+	// transition-delay: 1s;
 	@include desktop-1024 {
 		top: 0;
 		height: 100vh;
@@ -300,8 +326,6 @@ export default {
 	&__span-lines {
 		position: absolute;
 		top: 0;
-		// width: 30px;
-		// height: 2px;
 		width: 4px;
 		height: 4px;
 		border-radius: 50%;
@@ -328,13 +352,25 @@ export default {
 		}
 	}
 	&__info-wrapper {
+		transition:  all $transition_default ease-in-out;
 		@include desktop-1024 {
+			opacity: 1;
+			visibility: visible;
 			position: fixed;
 			min-height: 450px;
 			left: $nav_desktop_indent;
+			// transition:  .8s ease-out;
 		}
 		&_fade {
-			display: none;
+			opacity: 0;
+			visibility: hidden;
+			// @include desktop-1024 {
+			// 	opacity: 1;
+			// 	visibility: visible;
+			// 	position: fixed;
+			// 	min-height: 450px;
+			// 	left: $nav_desktop_indent;
+			// }
 		}
 	}
 	&__text {
@@ -406,7 +442,10 @@ export default {
 		&_active-ul {
 			opacity: 1;
 			visibility: visible;
-			transform: translateY(15px);
+			transform: translate(15px);
+			@include desktop-1024 {
+				transform: translateY(0);
+			}
 		}
 	}
 
