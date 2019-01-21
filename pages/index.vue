@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="b-main">
 		<navbar/>
 		<mainslider/>
 	</div>
@@ -30,3 +30,17 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+@import "~/assets/sass/base/_variables.scss";
+@import "~/assets/sass/base/_settings.scss";
+@import "~/assets/sass/base/_mixins.scss";
+@import "~/assets/sass/base/_variables.scss";
+
+.b-main {
+	@include desktop-1024 {
+		display: flex;
+	}
+}
+
+</style>

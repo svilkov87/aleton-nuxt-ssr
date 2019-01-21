@@ -1,68 +1,57 @@
 <template>
 	<div>
-		<div class="b-nav"
+		<div class="b-nav-content"
 			v-bind:class="[ 
 				this.isCompactMenu
-				? {'b-nav_compact-menu ':this.isCompactMenu} 
-				: { 'b-nav_down-menu ':this.isDownMenu }
+				? {'b-nav-content_compact-menu ':this.isCompactMenu} 
+				: { 'b-nav-content_down-menu ':this.isDownMenu }
 			]"
 		>
-			<span class="b-nav__logo">{{ title }}</span>
-			<span class="b-nav__span-hamburger"
-				@click="toggleMenu()"
-				v-bind:class="{ 'b-nav__span-hamburger_active-toggle ':this.isCompactMenu }"
-			>
-				<span class="b-nav__span-lines"></span>
-			</span>
-			<div class="b-nav__info-wrapper"
-				v-bind:class="[{ 'b-nav__info-wrapper_fade': !this.isShowInfo }]"
-			>
-				<p
-					v-for=" item  in infoData()"
-					:key="item.text"
-					v-bind:class="[ { [item.fadeClass]: !item.isVisible }, item.defaultClass ]"
+			<a href="/">
+				<span class="b-nav-content__logo"
+					v-bind:class="{ 
+						'b-nav-content__logo_logo-fixed': this.isDownMenu 
+						}"
 				>
-					{{ item.title}}
-				</p>
-			</div>
-			<div class="b-nav__service-button"
-				@click="compactMenu()"
-				v-bind:class="[
-					this.isDownMenu
-					? { 'b-nav__service-button_hide-button': this.isDownMenu }
-					:  { 'b-nav__service-button_active-button': this.isCompactMenu }
-				]"
+				{{ title }}	
+				</span>
+			</a>
+			<span class="b-nav-content__span-hamburger"
+				@click="toggleMenu()"
+				v-bind:class="{ 'b-nav-content__span-hamburger_active-toggle ':this.isDownMenu }"
 			>
-				<!-- перейти к услугам -->
-			</div>
-			<div v-if="this.$route.fullPath !==  '/' "  
-				class="b-nav__ul"
-				v-bind:class="{ 'b-nav__ul_active-ul ':this.isShowList }"
+				<span class="b-nav-content__span-lines"></span>
+			</span>
+			<div class="b-nav-content__info-wrapper"
+				v-bind:class="[{ 'b-nav-content__info-wrapper_fade': !this.isShowInfo }]"
 			>
-				<span  class="b-nav__li" 
+			</div>
+			<div class="b-nav-content__contacts"
+				v-bind:class="{ 'b-nav-content__ul_active-ul ':this.isShowList }"
+			>
+				<span class="b-nav-content__contacts-item b-nav-content__contacts-item_header">Контакты</span>
+				<span class="b-nav-content__contacts-item">603 070 г. Нижний Новгород</span>
+				<span class="b-nav-content__contacts-item">Ул. Мануфактурная, 12</span>
+				<span class="b-nav-content__contacts-item">+7 999 136 38 36</span>
+				<span class="b-nav-content__contacts-item">+7 999 136 12 55</span>
+			</div>
+			<div  class="b-nav-content__ul"
+				v-bind:class="{ 'b-nav-content__ul_active-ul ':this.isShowList }"
+			>
+				<span  class="b-nav-content__li" 
 					v-for="( menuItem ) in menuData()"
 					:key="menuItem.text"
-					v-bind:class="{ 'b-nav__li_fade-effect ':menuItem.isVisible }"
+					v-bind:class="{ 'b-nav-content__li_fade-effect ':menuItem.isVisible }"
 					@click="disactiveMenu()"
 				>						
 					<nuxt-link 
 						:to="menuItem.url"
-						exact-active-class="b-nav__active-link"
+						exact-active-class="b-nav-content__active-link"
 						@click="disactiveMenu()"
 					>
 						{{ menuItem.text }}
 					</nuxt-link>
 				</span>
-			</div>
-			<div v-else 
-				class="b-nav__ul"
-				v-bind:class="{ 'b-nav__ul_active-ul ':this.isShowList }"
-			>
-				<span class="b-nav__contacts-item b-nav__contacts-item_header">Контакты</span>
-				<span class="b-nav__contacts-item">603 070 г. Нижний Новгород</span>
-				<span class="b-nav__contacts-item">Ул. Мануфактурная, 12</span>
-				<span class="b-nav__contacts-item">+7 999 136 38 36</span>
-				<span class="b-nav__contacts-item">+7 999 136 12 55</span>
 			</div>
 		</div>
 	</div>
@@ -71,7 +60,7 @@
 <script>
 
 export default {
-	name: 'Navbar',
+	name: 'Navbarcontent',
 	data () {
 		return {
 			title: 'Алетон',
@@ -87,16 +76,16 @@ export default {
 			// 
 			fadeSettings: [
 				{
-					title: 'ПОМОЩЬ В ОФОРМЛЕНИИ ДОКУМЕНТОВ ДЛЯ ИНОСТРАННЫХ ГРАЖДАН',
-					defaultClass: 'b-nav__text',
-					fadeClass: 'b-nav__text_fade',
+					title: 'ПАТЕНТЫ',
+					defaultClass: 'b-nav-content__text',
+					fadeClass: 'b-nav-content__text_fade',
 					isVisible: true,
 					time: 200
 				},
 				{
-					title: 'Работаем с физическими лицами, по безналичному расчету',
-					defaultClass: 'b-nav__cash-term',
-					fadeClass: 'b-nav__cash-term_fade',
+					title: 'Патент - документ, подтверждающий  право иностранных граждан, прибывающих в Российскую Федерацию в безвизовом порядке, осуществлять трудовую деятельность на территории субъекта Российской Федерации.',
+					defaultClass: 'b-nav-content__cash-term',
+					fadeClass: 'b-nav-content__cash-term_fade',
 					isVisible: true,
 					time: 300
 				}
@@ -211,9 +200,9 @@ export default {
 @import "~/assets/sass/base/_mixins.scss";
 @import "~/assets/sass/base/_variables.scss";
 
-.b-nav {
+.b-nav-content {
 	position: absolute;
-	top: -150px;
+	top: -560px;
 	left: 0;
 	width: 100%;
 	height: 650px;
@@ -221,15 +210,13 @@ export default {
 	flex-direction: column;
 	justify-content: center;
 	background: #730D56;
-	background-image: url("~assets/b-nav__bg.svg");
-	background-position: bottom;
 	transition:  $transition_default ease-in;
 	z-index: 999;
 	// transition-delay: 6s;
 	@include desktop-1024 {
 		top: 0;
 		height: 100vh;
-		width: 50%;
+		width: 30%;
 		align-items: center;
 		background: $nav_bg;
 	}
@@ -239,6 +226,7 @@ export default {
 		height: 100%;
 		background: #000;
 		align-items: center;
+		z-index: 9999;
 		// transition-delay: $transition_default;
 		@include desktop-1024 {
 			width: 100%;
@@ -256,7 +244,7 @@ export default {
 		line-height: 65px;
 	}
 	&__logo {
-		color: $nav_color;
+		color: $nav_color;;
 		position: fixed;
 		top: 35px;
 		left: $indent_default;
@@ -264,8 +252,10 @@ export default {
 		font-weight: bold;
 		letter-spacing: 2px;
 		@include desktop-1024 {
+
 			top: $nav_desktop_indent;
-			left: $nav_desktop_indent;
+			left: calc(30% - 131px);
+
 		}
 	}	
 	&__span-hamburger {
@@ -280,15 +270,15 @@ export default {
 		transition:  $transition_default ease-out;
 		@include desktop-1024 {
 			cursor: pointer;
-			position: absolute;
-			top: 147px;
-			right: $nav_desktop_indent;
+			top: 200px;
+                        // right: 50px;
+                        left: calc(30% - 80px);
 		}
 		&_active-toggle{
 			@include desktop-1024 {
 				background: transparent;
 				transform: rotate(0);
-					.b-nav__span-lines {
+					.b-nav-content__span-lines {
 						border-radius: 0%;
 						width: 25px;
 						height: 2px;
@@ -336,13 +326,15 @@ export default {
 		}
 	}
 	&__info-wrapper {
+                display: none;
 		transition:  all $transition_default ease-in-out;
 		@include desktop-1024 {
+                        display: block;
 			opacity: 1;
 			visibility: visible;
 			position: fixed;
 			min-height: 450px;
-			left: $nav_desktop_indent;
+			left: 50px;
 			// transition:  .8s ease-out;
 		}
 		&_fade {
@@ -385,8 +377,11 @@ export default {
 		transition: all $transition_default ease-in-out;
 		@include desktop-1024 {
 			opacity: .75;
+			line-height: 25px;
 			position: static;
 			transform: translateY(70px);
+			// max-width: 360px;
+			max-width: 80%;
 		}
 		&_fade {
 			opacity: 0;
@@ -395,6 +390,9 @@ export default {
 				transform: translateY(140px) !important;
 			}
 		}
+	}
+	&__contacts {
+		display: none;
 	}
 	&__service-button {
 		height: 65px;
@@ -409,9 +407,6 @@ export default {
 		box-shadow: -5px 5px 40px rgba(0, 0, 0, 0.45);
 		border-radius: 50%;
 		transition: all $transition_default ease-in-out;
-		@include desktop-1024 {
-			display: none;
-		}
 		&_active-button {
 			opacity: 0;
 			transform: scale(2);
@@ -431,8 +426,18 @@ export default {
 		flex-direction: column;
 		transition: all $transition_default ease-in-out;
 		@include desktop-1024 {
-			max-width: 100%;
-			transform: translateY(-100px);
+			position: absolute !important;
+			top: 125px;
+			right: 0;
+			width: 70%;
+			max-width: 70%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			transition:  $transition_default ease-in;
+			z-index: 999;
+			// max-width: 100%;
+			// transform: translateY(-100px);
 		}
 		&_active-ul {
 			opacity: 1;

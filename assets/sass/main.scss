@@ -9,6 +9,9 @@ body{
 	a {
 		color: $link_default_color_hover;
 	}
+	p {
+		font-size: 18px;
+	}
 }
 
 * {
@@ -16,7 +19,7 @@ body{
 }
 
 .page-enter-active, .page-leave-active {
-	transition: opacity .8s;
+	transition: opacity .5s;
 }
 .page-enter, .page-leave-active {
 	opacity: 0;

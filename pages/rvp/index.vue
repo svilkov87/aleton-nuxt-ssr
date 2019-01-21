@@ -1,21 +1,19 @@
 <template>
-	<section class="container">
-	<div>
+	<div class="b-main">
 		<navbar/>
-		<div class="links">
-			<nuxt-link to="/">Главная</nuxt-link>
-		</div>
+		<mainslider/>
 	</div>
-	</section>
 </template>
 
 <script>
 import Navbar from '~/components/Navbar.vue'
+import Mainslider from '~/components/Mainslider.vue'
 
 export default {
 	components: {
 	// Logo,
-		Navbar
+		Navbar,
+		Mainslider
 	},
 	data () {
 		return {
