@@ -1,16 +1,28 @@
 <template>
-	<div class="b-main" @wheel="wheel">
+	<div class="b-main-content" @wheel="wheel">
 		<navbarpatent/>
-		<div class="b-content">
-			<div class="b-content__container">
-				<h1 class="b-content__header">{{ title }}</h1>
-				<p class="b-content__need-docs">{{ needDocs }}</p>
-				<!-- <ul class="b-content__list"> -->
+		<div class="b-content-left"
+			v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
+		>
+			<div class="b-content-left__info-block">
+				<nuxt-link to="/">
+					<span class="b-content-left__logo">
+					{{ title }}	
+					</span>
+				</nuxt-link>
+				<h1 class="b-content-left__header">{{ subTitle }}</h1>
+				<p class="b-content-left__need-docs">{{ description }}</p>
+			</div>
+		</div>
+		<div class="b-content"
+			v-bind:class="{'b-content_dominate': this.isContainerActive }">
+			<div class="b-content__container"
+				v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
+			>
+				
 				<ul
-					
 					v-bind:class="[ !listBySlider ? {'b-content__list-right-scroll':  !listBySlider} : {'b-content__list':  listBySlider} ]"
 				>
-				<!-- v-bind:class="[{'b-content__list-right-scroll': !listBySlider } ]" -->
 					<li 
 						class="b-content__list-item"
 						v-for="( item, index ) in contentData()"
@@ -21,7 +33,6 @@
 							: { 'b-content__list-item_column ': !listBySlider }
 						]"
 					>
-					<!-- v-bind:class="{'b-content__list-item_hide': !item.isVisible }" -->
 						<p class="b-content__list-item-title">
 							<span>{{ index + 1 }}.</span>
 							{{ item.title }}
@@ -30,12 +41,28 @@
 							v-if="item.description"
 						 	class="b-content__list-item-description"
 						>
-							<!-- v-bind:class="{'b-content__list-item-description_hide-description': !listBySlider }" -->
 							 {{ item.description }}
 						 </p>
 					</li>
 				</ul>
-				<div
+				<div class="b-content__counter"
+					v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
+				>
+					{{ contentCounter + 1 }} / 20
+				</div>
+				<div class="b-content__arrows-wrapper"
+					v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
+				>
+					<div class="b-content__arrow-up"
+						@click="counterUp()"
+					>
+					</div>
+					<div class="b-content__arrow-down"
+						@click="counterDown()"
+					>
+					</div>
+				</div>
+				<div 
 					class="b-content__circle"
 					v-bind:class="{'b-content__circle_hide-circle': !listBySlider }"
 					>
@@ -49,8 +76,10 @@
 				</div>
 				<div 
 					class="b-content__view-switchers"
+					v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
 					@click="changeContentView()"
 				>
+				
 					<div
 						class="b-content__view-slider"
 						v-bind:class="{'b-content__view-slider_disactive': !this.listBySlider }"
@@ -64,6 +93,11 @@
 						<span class="b-content__view-line b-content__view-line_type-columns"></span>
 					</div>
 				</div>
+				<div class="b-content__return-view"
+					v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
+					@click="returnDefaultContentView()"
+				
+				></div>
 			</div>
 		</div>
 	</div>
@@ -78,21 +112,29 @@ export default {
 	},
 	data () {
 		return {
-			title: 'Патенты',
+			title: 'Алетон',
+			subTitle: 'Патенты',
+			description: 'Для получения патента иностранный гражданин предоставляет следующие документы:',
 			pos: 'крути',
 			contentCounter: 0,
 			needDocs: 'Для получения патента иностранный гражданин предоставляет следующие документы:',
-			listBySlider: false,
+			isHideViewSwitcher: false,
+			isHideCounterBlock: false,
+			isHideArrows: false,
+			isContainerActive: false,
+			returnSliderView: false,
+			isHideCircles: false,
+			listBySlider: true,
 			contentArray: [
 				{
-					title: 'Фото 30*40',
-					description: 'Фото должно быть в цветном исполнении',
+					title: 'Заявление о выдаче патента',
+					description: '2 экземпляра',
 					isVisible: true,
 					position: 0
 				},
 				{
-					title: 'Заявление о выдаче патента',
-					description: '',
+					title: 'Фото 30*40',
+					description: 'Фото должно быть в цветном исполнении',
 					isVisible: false,
 					position: 1
 				},
@@ -112,9 +154,38 @@ export default {
 		}
 	},
 	methods: {
+		counterUp() {
+			this.contentCounter++
+
+			if( this.contentCounter >= this.contentArray.length - 1 ) {
+			this.contentCounter = this.contentArray.length - 1
+			}
+
+			if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
+			this.contentArray[ this.contentCounter ].isVisible = true
+			} 
+			if ( this.contentCounter - 1 == this.contentArray[ this.contentCounter - 1 ].position ) {
+			this.contentArray[ this.contentCounter - 1 ].isVisible = false   
+			}
+		},
+		counterDown() {
+			this.contentCounter--
+
+			if( this.contentCounter <= 0 ) {
+				this.contentCounter = 0
+				this.contentArray[ this.contentCounter ].isVisible = true
+			}
+
+			if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
+				this.contentArray[ this.contentCounter ].isVisible = true
+			} 
+			if ( this.contentCounter + 1 == this.contentArray[ this.contentCounter + 1 ].position ) {
+				this.contentArray[ this.contentCounter + 1 ].isVisible = false   
+			}
+		},
 		wheel (ev) {
 			if (this.listBySlider) {
-				if (ev.deltaY > 0) {
+				if (ev.deltaY < 0) {
 					this.pos = 'вверх' 
 					console.log( this.pos )
 					this.contentCounter++
@@ -154,15 +225,56 @@ export default {
 			return this.contentArray
 		},
 		counterIndex( index ) {
-			// console.log( index)
-			// if ( index != this.contentCounter  ) {
-			// 	this.contentCounter = index
-			// 	this.contentArray[ index ].isVisible = true
-			// }
 		},
 		changeContentView() {
-			this.listBySlider = !this.listBySlider;
-			console.log( this.listBySlider )
+			this.isHideViewSwitcher = true
+			// this.isHideCircles = true
+			setTimeout( () => 
+				this.isHideCounterBlock = true
+			, 300 );
+			setTimeout( () => 
+				this.isHideArrows = true
+			, 600 );
+			setTimeout( () => 
+				this.isContainerActive = true
+			, 900 );
+			setTimeout( () => 
+				this.listBySlider = false
+			, 900 );
+			setTimeout( () => 
+				this.returnSliderView = true
+			, 1400 );
+
+		},
+		returnDefaultContentView() {
+
+			setTimeout( () => 
+				this.returnSliderView = false
+			, 300 );
+
+			setTimeout( () => 
+				this.listBySlider = true
+			, 400 );
+
+			setTimeout( () => 
+				this.isContainerActive = false
+			, 600 );
+
+			setTimeout( () => 
+				this.isHideArrows = false
+			, 900 );
+
+			setTimeout( () => 
+				this.isHideCounterBlock = false
+			, 1200 );
+
+			setTimeout( () => 
+				this.isHideViewSwitcher = false
+			, 1400 );
+
+			setTimeout( () => 
+				this.isHideCircles = false
+			, 1600 );
 		}
 	},
 	head () {
@@ -187,24 +299,171 @@ export default {
 @import "~/assets/sass/base/_mixins.scss";
 @import "~/assets/sass/base/_variables.scss";
 
+.b-main-content {
+	@include desktop-1024 {
+		background: url("~assets/b-nav-content__bg-patent.svg") no-repeat;
+		background-size: cover;
+		height: 100vh;
+	}
+}
+.b-content-left {
+	display: none;
+	@include desktop-1024 {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 50%;
+		height: 100vh;
+		display: flex;
+		// flex-direction: column;
+		justify-content: flex-end;
+		// background: $nav_bg;
+		transition:  $transition_default ease-in;
+		&_tiny {
+			width: 40%;
+			background: #3c0d0d;
+		}
+	}
+	&__info-block {
+		padding-top: $nav_desktop_indent;
+		margin-right: 50px;
+		min-width: 430px;
+		max-width: 430px;
+		color: #fff;
+	}
+	&__logo {
+		color: $nav_color;
+		text-transform: uppercase;
+		font-weight: bold;
+		letter-spacing: 2px;
+		display: block;
+    		margin-bottom: 50px;
+	}
+	&__header {
+		margin-bottom: 30px;
+		letter-spacing: 2px;
+	}
+	&__heed-docs {
+    		line-height: 25px;
+	}
+}
+
 .b-content {
 	margin-top: 100px;
-	padding: 0 30px;
 	@include desktop-1024 {
-		margin-top: 150px;
+		padding: 0;
+		margin-top: 0;
 		position: absolute;
 		top: 0;
 		right: 0;
-		width: 70%;
+		bottom: 0;
+		width: 50%;
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		transition:  $transition_default ease-in;
+		&_dominate {
+			width: 60%;
+		}
 	}
 	&__container {
 		position: relative;
-		max-width: 740px;
-		// background: #ccc;
+		@include desktop-1024 {
+			position: relative;
+			width: 452px;
+			height: 475px;
+			padding: 20px;
+			background: #fff;
+			box-shadow: 20px 10px 100px rgba(0, 0, 0, 0.25);
+			transition:  $transition_default ease-in;
+			&_active-container {
+				padding: 150px 20px 0 20px;
+				top: 0;
+				right: 0;
+   				width: 100%;
+				height: 100vh;
+			}
+		}
+	}
+	&__counter {
+		opacity: 0;
+		visibility: hidden;
+		@include desktop-1024 {
+			opacity: 1;
+			visibility: visible;
+			position: absolute;
+			line-height: 114px;
+			text-align: center;
+			width: 138px;
+			height: 114px;
+			left: -90px;
+			bottom: 100px;
+			background: #FFFFFF;
+			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
+			transition:  $transition_default ease-in;
+			&_hide-counter-block {
+				opacity: 0;
+				visibility: hidden;
+				left: -120px;
+			}
+		}
+	}
+	&__arrows-wrapper {
+		@include desktop-1024 {
+			opacity: 1;
+			visibility: visible;
+			position: absolute;
+			display: flex;
+			flex-direction: column;
+			width: 90px;
+			height: 160px;
+			right: -70px;
+			top: 50px;
+			background: #FFFFFF;
+			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
+			transition:  $transition_default ease-in;
+			&_hide-arrows-wrapper {
+				opacity: 0;
+				visibility: hidden;
+				right:  0;
+			}
+		}
+	}
+	&__arrow-up {
+		@include desktop-1024 {
+			cursor: pointer;
+			width: 90px;
+			height: 80px;
+			background: #FFFFFF;
+		}
+	}
+	&__arrow-down {
+		@include desktop-1024 {
+			cursor: pointer;
+			width: 90px;
+			height: 80px;
+			background: #FFFFFF;
+		}
+	}
+	&__return-view {
+		@include desktop-1024 {
+			cursor: pointer;
+			position: absolute;
+			right: -50px;
+			opacity: 0;
+			width: 70px;
+			height: 80px;
+			background: #FFFFFF;
+			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
+			visibility: hidden;
+			transition:  $transition_default ease-in;
+			&_show-return-view {
+				opacity: 1;
+				visibility: visible;
+				left: -35px;
+				top: 50%;
+			}
+		}
 	}
 	&__header {
 		padding: 30px 0;
@@ -214,6 +473,7 @@ export default {
 	}
 	&__list {
 		margin-top: 30px;
+		padding: 0 30px;
 		@include desktop-1024 {
 			position: relative;
 			min-height: 150px;
@@ -310,51 +570,59 @@ export default {
 			opacity: 1;
 			visibility: visible;
 			display: flex;
-			flex-direction: column;
 			position: absolute;
-			// justify-content: center;
-			// height: 100%;
-			top: 70px;
-			right: -17px;
+			bottom: 13px;
+			left: 15px;
 			transition:  $transition_default ease-in;
 			&_hide-circle {
-				transform: translateY(40px);
+				// transform: translateY(40px);
 				opacity: 0;
 				visibility: hidden;
 			}
 		}
 	}
 	&__circle-item {
-		width: 10px;
-		height: 10px;
 		border-radius: 50px;
 		background: #ccc;
-		margin-right: 5px;
-		margin-bottom: 5px;
+		margin-right: 15px;
 		transition: all .5s;
+		width: 4px;
+		height: 4px;
+		background: #FFFFFF;
+		border: 1px solid #1F4866;
+		box-sizing: border-box;
+		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		&_show {
 			position: relative;
-			background: $nav_bg;
-			transform: scale(1.3);
-			&:after {
-				content: '';
-				position: absolute;
-				width: 15px;
-				height: 1px;
-				top: 4px;
-				right: -20px;
-				background: $nav_bg;
-			}
+			background: #9E0202;
+			border: none;
+			transform: scale(3);
+			// &:after {
+			// 	content: '';
+			// 	position: absolute;
+			// 	width: 15px;
+			// 	height: 1px;
+			// 	top: 4px;
+			// 	right: -20px;
+			// 	background: $nav_bg;
+			// }
 		}
 	}
 	&__view-switchers {
 		@include desktop-1024 {
+			opacity: 1;
+			visibility: visible;
 			display: flex;
 			position: absolute;
 			top: 0;
-			right: -80px;
+			right: 0;
 			cursor: pointer;
 			transition:  $transition_default ease-out;
+			&_hide-view-switchers {
+				top: -10px;
+				opacity: 0;
+				visibility: hidden;
+			}
 		}
 	}
 	&__view-slider {
@@ -362,12 +630,12 @@ export default {
 			position: relative;
 			width: 40px;
 			height: 40px;
-			background: $nav_bg;
+			background: #563EA9;
 			transition:  $transition_default ease-out;
 			&_disactive {
 				background: #e0dfdf;
 				span {
-					background: $nav_bg;
+					background: #563EA9;
 				}
 			}
 		}

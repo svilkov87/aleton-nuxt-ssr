@@ -284,7 +284,7 @@ export default {
 		@include desktop-1024 {
 			cursor: pointer;
 			position: absolute;
-			top: 147px;
+			top: 100px;
 			right: $nav_desktop_indent;
 		}
 		&_active-toggle{

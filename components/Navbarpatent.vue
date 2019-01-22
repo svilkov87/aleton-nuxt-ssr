@@ -7,7 +7,7 @@
 				: { 'b-nav-content_down-menu ':this.isDownMenu }
 			]"
 		>
-			<nuxt-link to="/">
+			<!-- <nuxt-link to="/">
 				<span class="b-nav-content__logo"
 					v-bind:class="{ 
 						'b-nav-content__logo_logo-fixed': this.isDownMenu 
@@ -15,12 +15,14 @@
 				>
 				{{ title }}	
 				</span>
-			</nuxt-link>
+			</nuxt-link> -->
 			<span class="b-nav-content__span-hamburger"
 				@click="toggleMenu()"
 				v-bind:class="{ 'b-nav-content__span-hamburger_active-toggle ':this.isDownMenu }"
 			>
-				<span class="b-nav-content__span-lines"></span>
+				<span class="b-nav-content__span-lines"
+					v-bind:class="{ 'b-nav-content__span-lines_active-toggle ':this.isDownMenu }"
+				></span>
 			</span>
 			<div class="b-nav-content__info-wrapper"
 				v-bind:class="[{ 'b-nav-content__info-wrapper_fade': !this.isShowInfo }]"
@@ -215,11 +217,13 @@ export default {
 	z-index: 999;
 	// transition-delay: 6s;
 	@include desktop-1024 {
-		top: 0;
+		// top: -560px;
+		top: -100%;
 		height: 100vh;
-		width: 30%;
+		width: 100%;
 		align-items: center;
-		background: $nav_bg;
+		// background: $nav_bg;
+		background: transparent;
 	}
 	&_down-menu {
 		top: 0;
@@ -245,7 +249,7 @@ export default {
 		line-height: 65px;
 	}
 	&__logo {
-		color: $nav_color;;
+		color: $nav_color;
 		position: fixed;
 		top: 35px;
 		left: $indent_default;
@@ -253,10 +257,13 @@ export default {
 		font-weight: bold;
 		letter-spacing: 2px;
 		@include desktop-1024 {
-
+			color: $nav_color;
 			top: $nav_desktop_indent;
-			left: calc(30% - 131px);
-
+			// left: 250px;
+			left: calc( 50% / 2 );
+		}
+		&_logo-fixed {
+			color: $nav_color;
 		}
 	}	
 	&__span-hamburger {
@@ -269,11 +276,13 @@ export default {
 		height: 20px;
 		transform: rotate(90deg);
 		transition:  $transition_default ease-out;
+		z-index: 999999;
 		@include desktop-1024 {
 			cursor: pointer;
-			top: 200px;
-                        // right: 50px;
-                        left: calc(30% - 80px);
+			top: $nav_desktop_indent;
+                        // right: 250px;
+                        // left: calc(30% - 80px);
+			right: calc( 50% / 2 );
 		}
 		&_active-toggle{
 			@include desktop-1024 {
@@ -295,7 +304,6 @@ export default {
 						}
 					}
 			}
-			
 		}
 	}
 	&__span-lines {
@@ -324,6 +332,48 @@ export default {
 			background: $nav_color;
 		}
 		@include desktop-1024 {
+			background: $nav_bg;
+			&:before {
+				content: '';
+				position: absolute;
+				top: 8px;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background: $nav_bg;
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				top: 16px;
+				width: 4px;
+				height: 4px;
+				border-radius: 50%;
+				background: $nav_bg;
+			}
+			&_active-toggle{
+				@include desktop-1024 {
+					background: $nav_color;
+					&:before {
+						content: '';
+						position: absolute;
+						top: 8px;
+						width: 4px;
+						height: 4px;
+						border-radius: 50%;
+						background: $nav_color;
+					}
+					&:after {
+						content: '';
+						position: absolute;
+						top: 16px;
+						width: 4px;
+						height: 4px;
+						border-radius: 50%;
+						background: $nav_color;
+					}
+				}
+			}
 		}
 	}
 	&__info-wrapper {
@@ -476,7 +526,9 @@ export default {
 		opacity: 0;
 		transition: all $transition_default ease-in-out;
 		@include desktop-1024 {
+			display: inline-block;
 			line-height: 50px;
+			width: max-content;
 		}
 		&_fade-effect {
 			opacity: 1;

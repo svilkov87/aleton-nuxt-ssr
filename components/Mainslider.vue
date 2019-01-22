@@ -118,8 +118,8 @@
 			right: 0;
 			bottom: 0;
 			// background: url("~assets/b-nav__bg_1.jpg") no-repeat;
-			background: url("~assets/bg.png") no-repeat;
-			background-size: cover;
+			// background: url("~assets/bg.png") no-repeat;
+			// background-size: cover;
 			// filter: blur(3px);
 		}
 	}
@@ -145,12 +145,12 @@
 			height: 5px;
 			top: 30px;
 			left: 30px;
-			border: 1px solid #fff;
+			border: 1px solid $nav_bg;
 			border-radius: 50%;
 		}
 		
 		@include desktop-1024 {
-			color: #fff;
+			color: #000;
 			width: 50%;
 			line-height: 70px;
 			transition:  all .2s ease-in-out;
@@ -169,10 +169,10 @@
 			color: #000;
 			@include desktop-1024 {
 				// background: #fff;
-				// color: #000;
-				color: #fff;
-				// border-bottom: 1px solid $nav_bg; 
-				border-bottom: 1px solid #fff; 
+				color: #000;
+				// color: #fff;
+				border-bottom: 1px solid $nav_bg; 
+				// border-bottom: 1px solid #fff; 
 			}
 			&:before {
 				content: '';
