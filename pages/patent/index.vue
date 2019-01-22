@@ -82,7 +82,7 @@ export default {
 			pos: 'крути',
 			contentCounter: 0,
 			needDocs: 'Для получения патента иностранный гражданин предоставляет следующие документы:',
-			listBySlider: true,
+			listBySlider: false,
 			contentArray: [
 				{
 					title: 'Фото 30*40',
@@ -98,7 +98,7 @@ export default {
 				},
 				{
 					title: 'Документ, удостоверяющий личность данного иностранного гражданина и признаваемый Российской Федерацией в этом качестве',
-					description: '',
+					description: 'Очень часто это паспорт, военный билет или водительское удостоверение',
 					isVisible: false,
 					position: 2
 				},
@@ -233,9 +233,11 @@ export default {
 	}
 	&__list-item{
 		padding: 15px 0;
+		// padding: 15px;
 		transition:  $transition_default ease-in;
 		@include desktop-1024 {
 			position: absolute;
+			padding: 15px;
 			top: 0;
 			left: 0;
 			&_hide {
@@ -254,7 +256,7 @@ export default {
 		padding-left: 15px;
 		@include desktop-1024 {
 			padding-left: 0;
-			font-size: 34px;
+			font-size: 26px;
 			font-weight: bold;
 		}
 		&:before {
@@ -311,7 +313,7 @@ export default {
 			flex-direction: column;
 			position: absolute;
 			// justify-content: center;
-			height: 100%;
+			// height: 100%;
 			top: 70px;
 			right: -17px;
 			transition:  $transition_default ease-in;

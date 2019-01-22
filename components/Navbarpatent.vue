@@ -7,7 +7,7 @@
 				: { 'b-nav-content_down-menu ':this.isDownMenu }
 			]"
 		>
-			<a href="/">
+			<nuxt-link to="/">
 				<span class="b-nav-content__logo"
 					v-bind:class="{ 
 						'b-nav-content__logo_logo-fixed': this.isDownMenu 
@@ -15,7 +15,7 @@
 				>
 				{{ title }}	
 				</span>
-			</a>
+			</nuxt-link>
 			<span class="b-nav-content__span-hamburger"
 				@click="toggleMenu()"
 				v-bind:class="{ 'b-nav-content__span-hamburger_active-toggle ':this.isDownMenu }"
@@ -201,7 +201,8 @@ export default {
 @import "~/assets/sass/base/_variables.scss";
 
 .b-nav-content {
-	position: absolute;
+	// position: absolute;
+	position: fixed;
 	top: -560px;
 	left: 0;
 	width: 100%;

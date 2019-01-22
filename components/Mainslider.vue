@@ -2,6 +2,7 @@
 	<div class="b-slider"
 		v-bind:class="{ 'b-slider_active-content ':this.$store.state.isShowContent }"
 	>
+		<div class="b-slider__bg"></div>
 		<nuxt-link 
 			v-for="item in getSliderData ()"
 			:key="item.position"
@@ -109,6 +110,19 @@
 		align-items: center;
 		bottom: 100px;
 	}
+	&__bg {
+		@include desktop-1024 {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			// background: url("~assets/b-nav__bg_1.jpg") no-repeat;
+			background: url("~assets/bg.png") no-repeat;
+			background-size: cover;
+			// filter: blur(3px);
+		}
+	}
 	&_active-content {
 		opacity: 1;
 		visibility: visible;
@@ -118,7 +132,7 @@
 	&__grid-item {
 		position: relative;
 		width: 100%;
-		margin: 5px;
+		// margin: 5px;
 		padding-left: 50px;
 		color: #000;
 		text-transform: uppercase;
@@ -131,17 +145,20 @@
 			height: 5px;
 			top: 30px;
 			left: 30px;
-			border: 1px solid #000;
+			border: 1px solid #fff;
 			border-radius: 50%;
 		}
 		
 		@include desktop-1024 {
+			color: #fff;
 			width: 50%;
 			line-height: 70px;
 			transition:  all .2s ease-in-out;
 		}
 		&:hover {
 			@include desktop-1024 {
+				background: #fff;
+				color: #000;
 				transform: scale(1.1);
 				border-bottom: none; 
 				box-shadow:  0px 0px 30px 10px rgba(0, 0, 0, 0.15);
@@ -149,8 +166,13 @@
 		}
 
 		&_acrive-grid {
+			color: #000;
 			@include desktop-1024 {
-				border-bottom: 1px solid $nav_bg; 
+				// background: #fff;
+				// color: #000;
+				color: #fff;
+				// border-bottom: 1px solid $nav_bg; 
+				border-bottom: 1px solid #fff; 
 			}
 			&:before {
 				content: '';

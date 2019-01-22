@@ -10,7 +10,7 @@
 			<span class="b-nav__logo">{{ title }}</span>
 			<span class="b-nav__span-hamburger"
 				@click="toggleMenu()"
-				v-bind:class="{ 'b-nav__span-hamburger_active-toggle ':this.isCompactMenu }"
+				v-bind:class="{ 'b-nav__span-hamburger_active-toggle ':this.isDownMenu }"
 			>
 				<span class="b-nav__span-lines"></span>
 			</span>
@@ -221,8 +221,10 @@ export default {
 	flex-direction: column;
 	justify-content: center;
 	background: #730D56;
-	background-image: url("~assets/b-nav__bg.svg");
-	background-position: bottom;
+	// background-image: url("~assets/b-nav__bg.svg");
+	background: url("~assets/bg.png") no-repeat;
+	background-size: cover;
+	// background-position: bottom;
 	transition:  $transition_default ease-in;
 	z-index: 999;
 	// transition-delay: 6s;
@@ -248,6 +250,7 @@ export default {
 	&_compact-menu {
 		top: -560px;
 		background-image: none;
+		background: #000;
 	}
 	&__test-link {
 		position: absolute;
