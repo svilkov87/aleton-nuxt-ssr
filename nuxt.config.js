@@ -3,9 +3,9 @@ const pkg = require('./package')
 module.exports = {
 mode: 'universal',
 
-  /*
-  ** Headers of the page
-  */
+	/*
+	** Headers of the page
+	*/
 head: {
 	title: pkg.name,
 	meta: [
@@ -16,53 +16,53 @@ head: {
 	link: [
 		{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
 	]
-  },
+	},
 
-  /*
-  ** Customize the progress-bar color
-  */
-  loading: { color: '#fff' },
+	/*
+	** Customize the progress-bar color
+	*/
+	loading: { color: '#fff' },
 
-  /*
-  ** Global CSS
-  */
- css: [
-	  '@/assets/sass/main.scss'
-  ],
+	/*
+	** Global CSS
+	*/
+	css: [
+		'@/assets/sass/main.scss'
+	],
 
-  /*
-  ** Plugins to load before mounting the App
-  */
-  plugins: [
-  ],
+	/*
+	** Plugins to load before mounting the App
+	*/
+	plugins: [
+		// { src: '~/plugins/webFontLoader.js', ssr: false }
+	],
 
-  /*
-  ** Nuxt.js modules
-  */
-  modules: [
+	/*
+	** Nuxt.js modules
+	*/
+	modules: [
 	// Doc: https://github.com/nuxt-community/axios-module#usage
-	  '@nuxtjs/axios',
-    // ['nuxt-sass-resources-loader', '@/assets/sass/main.scss'],
-  
-  ],
-  /*
-  ** Axios module configuration
-  */
-  axios: {
+		'@nuxtjs/axios',
+	],
+	
+	/*
+	** Axios module configuration
+	*/
+	axios: {
 	// See https://github.com/nuxt-community/axios-module#options
-  },
+	},
 
-  /*
-  ** Build configuration
-  */
-  build: {
+	/*
+	** Build configuration
+	*/
+	build: {
 
 	extractCSS: true,
 	/*
 	** You can extend webpack config here
 	*/
 	extend(config, ctx) {
-	  
+		
 	}
-  }
+	}
 }

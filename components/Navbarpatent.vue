@@ -7,7 +7,7 @@
 				: { 'b-nav-content_down-menu ':this.isDownMenu }
 			]"
 		>
-			<!-- <nuxt-link to="/">
+			<nuxt-link to="/">
 				<span class="b-nav-content__logo"
 					v-bind:class="{ 
 						'b-nav-content__logo_logo-fixed': this.isDownMenu 
@@ -15,7 +15,7 @@
 				>
 				{{ title }}	
 				</span>
-			</nuxt-link> -->
+			</nuxt-link>
 			<span class="b-nav-content__span-hamburger"
 				@click="toggleMenu()"
 				v-bind:class="{ 'b-nav-content__span-hamburger_active-toggle ':this.isDownMenu }"
@@ -222,7 +222,6 @@ export default {
 		height: 100vh;
 		width: 100%;
 		align-items: center;
-		// background: $nav_bg;
 		background: transparent;
 	}
 	&_down-menu {
@@ -257,10 +256,7 @@ export default {
 		font-weight: bold;
 		letter-spacing: 2px;
 		@include desktop-1024 {
-			color: $nav_color;
-			top: $nav_desktop_indent;
-			// left: 250px;
-			left: calc( 50% / 2 );
+			display: none;
 		}
 		&_logo-fixed {
 			color: $nav_color;

@@ -1,5 +1,7 @@
 <template>
-	<div class="b-main-content" @wheel="wheel">
+	<div class="b-main-content" @wheel="wheel"
+		v-bind:class="{'b-main-content_hide-bg': this.isContainerActive }"
+	>
 		<navbarpatent/>
 		<div class="b-content-left"
 			v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
@@ -19,6 +21,7 @@
 			<div class="b-content__container"
 				v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
 			>
+			<h1 class="b-content__header">{{ subTitle }}</h1>
 				
 				<ul
 					v-bind:class="[ !listBySlider ? {'b-content__list-right-scroll':  !listBySlider} : {'b-content__list':  listBySlider} ]"
@@ -105,10 +108,12 @@
 
 <script>
 import Navbarpatent from '~/components/Navbarpatent.vue'
+import Copyright from '~/components/Copyright.vue'
 
 export default {
 	components: {
-		Navbarpatent
+		Navbarpatent,
+		Copyright
 	},
 	data () {
 		return {
@@ -128,7 +133,7 @@ export default {
 			contentArray: [
 				{
 					title: 'Заявление о выдаче патента',
-					description: '2 экземпляра',
+					description: 'Написание заявления о выдаче патента на осуществление трудовой деятельности в РФ гражданам других государств проводится на территории любого субъекта Федерации. Основанием для этого служит контракт или трудовой договор граждан РФ с лицами, прибывшими в страну на законных основаниях в порядке безвизового въезда',
 					isVisible: true,
 					position: 0
 				},
@@ -301,9 +306,13 @@ export default {
 
 .b-main-content {
 	@include desktop-1024 {
-		background: url("~assets/b-nav-content__bg-patent.svg") no-repeat;
+		// background: url("~assets/b-nav-content__bg-patent.svg") no-repeat;
 		background-size: cover;
 		height: 100vh;
+		transition:  $transition_default ease-in;
+		// &_hide-bg {
+		// 	background: $nav_bg_mobile;
+		// }
 	}
 }
 .b-content-left {
@@ -317,11 +326,12 @@ export default {
 		display: flex;
 		// flex-direction: column;
 		justify-content: flex-end;
-		// background: $nav_bg;
+		background: $nav_bg;
 		transition:  $transition_default ease-in;
+
 		&_tiny {
 			width: 40%;
-			background: #3c0d0d;
+			// background: #3c0d0d;
 		}
 	}
 	&__info-block {
@@ -329,7 +339,7 @@ export default {
 		margin-right: 50px;
 		min-width: 430px;
 		max-width: 430px;
-		color: #fff;
+		color: #d2d2d2;
 	}
 	&__logo {
 		color: $nav_color;
@@ -343,8 +353,13 @@ export default {
 		margin-bottom: 30px;
 		letter-spacing: 2px;
 	}
-	&__heed-docs {
-    		line-height: 25px;
+	&__need-docs {
+		line-height: 25px;
+		letter-spacing: 2px;
+		@include desktop-1024 {
+			width: 320px;
+		}
+
 	}
 }
 
@@ -370,7 +385,8 @@ export default {
 		position: relative;
 		@include desktop-1024 {
 			position: relative;
-			width: 452px;
+			margin-left: -50px;
+			width: 552px;
 			height: 475px;
 			padding: 20px;
 			background: #fff;
@@ -378,6 +394,7 @@ export default {
 			transition:  $transition_default ease-in;
 			&_active-container {
 				padding: 150px 20px 0 20px;
+				margin-left: 0;
 				top: 0;
 				right: 0;
    				width: 100%;
@@ -451,7 +468,7 @@ export default {
 			position: absolute;
 			right: -50px;
 			opacity: 0;
-			width: 70px;
+			width: 120px;
 			height: 80px;
 			background: #FFFFFF;
 			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
@@ -460,14 +477,15 @@ export default {
 			&_show-return-view {
 				opacity: 1;
 				visibility: visible;
-				left: -35px;
+				left: -95px;
 				top: 50%;
 			}
 		}
 	}
 	&__header {
-		padding: 30px 0;
+		padding: 30px 0 30px 30px;
 		@include desktop-1024 {
+			display: none;
 			padding: 0 0 30px 0;
 		}
 	}
@@ -630,12 +648,12 @@ export default {
 			position: relative;
 			width: 40px;
 			height: 40px;
-			background: #563EA9;
+			background: $nav_bg;
 			transition:  $transition_default ease-out;
 			&_disactive {
 				background: #e0dfdf;
 				span {
-					background: #563EA9;
+					background: $nav_bg;
 				}
 			}
 		}

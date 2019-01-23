@@ -33,7 +33,6 @@
 					:  { 'b-nav__service-button_active-button': this.isCompactMenu }
 				]"
 			>
-				<!-- перейти к услугам -->
 			</div>
 			<div v-if="this.$route.fullPath !==  '/' "  
 				class="b-nav__ul"
@@ -341,11 +340,20 @@ export default {
 	&__info-wrapper {
 		transition:  all $transition_default ease-in-out;
 		@include desktop-1024 {
+			// opacity: 1;
+			// visibility: visible;
+			// position: fixed;
+			// min-height: 450px;
+			// left: $nav_desktop_indent;
 			opacity: 1;
 			visibility: visible;
 			position: fixed;
 			min-height: 450px;
-			left: $nav_desktop_indent;
+			max-width: 550px;
+			// padding-left: 25px;
+			// box-shadow: 20px 10px 100px rgba(0, 0, 0, 0.25);
+			left: 100px;
+			// background: #4c5358;
 			// transition:  .8s ease-out;
 		}
 		&_fade {
@@ -365,8 +373,10 @@ export default {
 		transition: all $transition_default ease-in-out;
 		@include desktop-1024 {
 			position: static;
+			color: #fff;
 			transform: translateY(45px);
-			font-size: 48px;
+			max-width: 50%;
+			// font-size: 48px;
 		}
 		&_fade {
 			opacity: 0;
@@ -387,6 +397,7 @@ export default {
 		letter-spacing: 2px;
 		transition: all $transition_default ease-in-out;
 		@include desktop-1024 {
+			color: #fff;
 			opacity: .75;
 			position: static;
 			transform: translateY(70px);

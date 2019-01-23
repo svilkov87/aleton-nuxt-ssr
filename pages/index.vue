@@ -2,17 +2,20 @@
 	<div class="b-main">
 		<navbar/>
 		<mainslider/>
+		<copyright/>
 	</div>
 </template>
 
 <script>
 import Navbar from '~/components/Navbar.vue'
 import Mainslider from '~/components/Mainslider.vue'
+import Copyright from '~/components/Copyright.vue'
 
 export default {
 	components: {
 		Navbar,
-		Mainslider
+		Mainslider,
+		Copyright
 	},
 	data () {
 		return {

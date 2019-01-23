@@ -137,16 +137,19 @@
 		color: #000;
 		text-transform: uppercase;
 		font-weight: bold;
-		line-height: 70px;
+		line-height: 58px;
 		&:before {
 			content: '';
 			position: absolute;
 			width: 5px;
 			height: 5px;
-			top: 30px;
+			top: 23px;
 			left: 30px;
 			border: 1px solid $nav_bg;
 			border-radius: 50%;
+			@include desktop-1024 {
+				top: 30px;
+			}
 		}
 		
 		@include desktop-1024 {
@@ -179,12 +182,14 @@
 				position: absolute;
 				width: 9px;
 				height: 9px;
-				top: 30px;
+				top: 22px;
 				left: 28px;
 				background: $nav_bg;
 				border-radius: 50%;
 				border: none;
-
+				@include desktop-1024 {
+					top: 30px;
+				}
 			}
 		}
 	}
