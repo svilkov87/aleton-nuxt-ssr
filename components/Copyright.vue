@@ -3,7 +3,6 @@
                 class="b-copyright"
                 
         >
-        <!-- v-bind:class="{ 'b-copyright__not-main ':this.$route.fullPath !==  '/' }" -->
                 <span class="b-copyright__text">
                         {{ copyright }}
                 </span>
@@ -11,7 +10,6 @@
         <div v-else
                 class="b-copyright_not-main"
         >
-        <!-- v-bind:class="{ 'b-copyright__not-main ':this.$route.fullPath !==  '/' }" -->
                 <span class="b-copyright__text">
                         {{ copyright }}
                 </span>

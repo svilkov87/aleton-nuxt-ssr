@@ -211,8 +211,8 @@ export default {
 @import "~/assets/sass/base/_variables.scss";
 
 .b-nav {
-	position: absolute;
-	top: -150px;
+	position: fixed;
+	top: -120px;
 	left: 0;
 	width: 100%;
 	height: 650px;
@@ -220,19 +220,15 @@ export default {
 	flex-direction: column;
 	justify-content: center;
 	background: #730D56;
-	// background-image: url("~assets/b-nav__bg.svg");
-	background: url("~assets/bg.png") no-repeat;
-	background-size: cover;
-	// background-position: bottom;
 	transition:  $transition_default ease-in;
 	z-index: 999;
 	// transition-delay: 6s;
 	@include desktop-1024 {
-		top: 0;
+		top: -560px;
 		height: 100vh;
-		width: 50%;
+		width: 100%;
 		align-items: center;
-		background: $nav_bg;
+		background: transparent;
 	}
 	&_down-menu {
 		top: 0;
@@ -240,6 +236,7 @@ export default {
 		height: 100%;
 		background: #000;
 		align-items: center;
+		z-index: 9999;
 		// transition-delay: $transition_default;
 		@include desktop-1024 {
 			width: 100%;
@@ -249,7 +246,6 @@ export default {
 	&_compact-menu {
 		top: -560px;
 		background-image: none;
-		background: #000;
 	}
 	&__test-link {
 		position: absolute;
@@ -266,6 +262,7 @@ export default {
 		font-weight: bold;
 		letter-spacing: 2px;
 		@include desktop-1024 {
+			display: none;
 			top: $nav_desktop_indent;
 			left: $nav_desktop_indent;
 		}
@@ -282,8 +279,8 @@ export default {
 		transition:  $transition_default ease-out;
 		@include desktop-1024 {
 			cursor: pointer;
-			position: absolute;
-			top: 100px;
+			// position: fixed;
+			top: $nav_desktop_indent;
 			right: $nav_desktop_indent;
 		}
 		&_active-toggle{
@@ -315,7 +312,10 @@ export default {
 		width: 4px;
 		height: 4px;
 		border-radius: 50%;
-		background: $nav_color;
+		background: #fff;
+		@include desktop-1024 {
+			background: $nav_bg;
+		}
 		&:before {
 			content: '';
 			position: absolute;
@@ -323,7 +323,10 @@ export default {
 			width: 4px;
 			height: 4px;
 			border-radius: 50%;
-			background: $nav_color;
+			background: #fff;
+			@include desktop-1024 {
+				background: $nav_bg;
+			}
 		}
 		&:after {
 			content: '';
@@ -332,9 +335,10 @@ export default {
 			width: 4px;
 			height: 4px;
 			border-radius: 50%;
-			background: $nav_color;
-		}
-		@include desktop-1024 {
+			background: #fff;
+			@include desktop-1024 {
+				background: $nav_bg;
+			}
 		}
 	}
 	&__info-wrapper {

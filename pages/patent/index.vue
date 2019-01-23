@@ -61,11 +61,11 @@
 					v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
 				>
 					<div class="b-content__arrow-up"
-						@click="counterUp()"
+						@click="counterDown()"
 					>
 					</div>
 					<div class="b-content__arrow-down"
-						@click="counterDown()"
+						@click="counterUp()"
 					>
 					</div>
 				</div>
@@ -106,7 +106,8 @@
 				<div class="b-content__return-view"
 					v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
 					@click="returnDefaultContentView()"
-				>
+				>	
+					<span class="b-content__return-view-span"></span>
 					<div class="b-content__return-view-popup">Вернуть компактный вид</div>
 				</div>
 			</div>
@@ -198,7 +199,7 @@ export default {
 		},
 		wheel (ev) {
 			if (this.listBySlider) {
-				if (ev.deltaY < 0) {
+				if (ev.deltaY >  0) {
 					this.pos = 'вверх' 
 					console.log( this.pos )
 					this.contentCounter++
@@ -314,13 +315,9 @@ export default {
 
 .b-main-content {
 	@include desktop-1024 {
-		// background: url("~assets/b-nav-content__bg-patent.svg") no-repeat;
 		background-size: cover;
 		height: 100vh;
 		transition:  $transition_default ease-in;
-		// &_hide-bg {
-		// 	background: $nav_bg_mobile;
-		// }
 	}
 }
 .b-content-left {
@@ -332,19 +329,16 @@ export default {
 		width: 50%;
 		height: 100vh;
 		display: flex;
-		// flex-direction: column;
 		justify-content: flex-end;
 		background: $nav_bg;
 		transition:  $transition_default ease-in;
 
 		&_tiny {
 			width: 40%;
-			// background: #3c0d0d;
 		}
 	}
 	&__info-block {
 		padding-top: $nav_desktop_indent;
-		margin-right: 50px;
 		min-width: 430px;
 		max-width: 430px;
 		color: #d2d2d2;
@@ -408,7 +402,7 @@ export default {
 		@include desktop-1024 {
 			position: relative;
 			margin-left: -50px;
-			width: 552px;
+			width: 652px;
 			height: 475px;
 			padding: 20px;
 			background: #fff;
@@ -520,35 +514,73 @@ export default {
 			right: 0;
 			cursor: pointer;
 			transition:  $transition_default ease-out;
+			&:before {
+				content: '';
+				top: -23px;
+				transform: rotate(-45deg);
+				right: -32px;
+				position: absolute;
+				width: 0; height: 0;
+				border-bottom: 10px solid transparent;
+				border-right: 20px solid #03841c;
+				border-top: 10px solid transparent;
+				transition:  all $transition_default ease-out;
+			}
 			&_hide-view-switchers {
 				top: -10px;
 				opacity: 0;
 				visibility: hidden;
+				&:before {
+					display: none;
+				}
 			}
 			&:hover .b-content__view-popup{
 				opacity: 1;
 				visibility: visible;
 			}
+			&:hover {
+				&:before {
+					opacity: 0;
+					visibility: hidden;
+					right: -50px;
+				}
+			}
 		}
 	}
 	&__view-popup {
+		display: none;
 		@include desktop-1024 {
 			opacity: 0;
 			visibility: hidden;
+			// opacity: 1;
+			// visibility: visible;
 			padding: 20px;
 			display: flex;
 			position: absolute;
-			top: -85px;
+			top: -91px;
 			left: -150px;
-			background: $nav_bg;
+			background: #03841c;
 			color: $nav_color;
 			cursor: pointer;
 			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
 			transition:  $transition_default ease-out;
+			z-index: 999999;
+			&:before {
+				content: '';
+				position: absolute;
+				bottom: -10px;
+				right: 32px;
+				position: absolute;
+				width: 0; height: 0;
+				border-left: 5px solid transparent;
+				border-right: 5px solid transparent;
+				border-top: 10px solid #03841c;
+			}
 		}
 	}
 	&__view-slider {
 		@include desktop-1024 {
+			display: none;
 			position: relative;
 			width: 40px;
 			height: 40px;
@@ -614,10 +646,13 @@ export default {
 		}
 	}
 	&__return-view {
+		display: none;
 		@include desktop-1024 {
+			display: block;
 			cursor: pointer;
 			position: absolute;
-			right: -50px;
+			top: 50%;
+			left: -105px;
 			opacity: 0;
 			width: 120px;
 			height: 80px;
@@ -627,61 +662,85 @@ export default {
 			transition:  $transition_default ease-in;
 			&:before {
 				content: '';
+				bottom: 20px;
+				left: -32px;
 				position: absolute;
-				top: 30px;
-				left: 44px;
-				width: 50px;
-				height: 2px;
-				background: #000;
-				transition:  $transition_default ease-in;
-
-			}
-			&:after {
-				content: '';
-				position: absolute;
-				top: 47px;
-				left: 30px;
-				width: 50px;
-				height: 2px;
-				background: #000;
-				transition:  $transition_default ease-in;
-
+				width: 0; height: 0;
+				border-top: 10px solid transparent;
+				border-left: 20px solid #ff4c00;
+				border-bottom: 10px solid transparent;
+				transition:  all $transition_default ease-out;
 			}
 			&:hover {
 				&:before {
-					top: 30px;
-					left: 36px;
+					opacity: 0;
+					visibility: hidden;
+					left: -45px;
 				}
-				&:after {
-					top: 47px;
-					left: 36px;
-				}	
 			}
 			&_show-return-view {
 				opacity: 1;
 				visibility: visible;
 				left: -95px;
-				top: 50%;
 			}
 			&:hover .b-content__return-view-popup {
 				opacity: 1;
 				visibility: visible;
 			}
+			&:hover .b-content__return-view-span {
+				&:before {
+					left: 0;
+				}
+			}
+		}
+	}
+	&__return-view-span {
+			position: absolute;
+			top: 35px;
+			left: 35px;
+			width: 50px;
+			height: 2px;
+			background: #000;
+			transition:  $transition_default ease-in;
+		&:before {
+			content: '';
+			position: absolute;
+			top: 10px;
+			left: 15px;
+			width: 50px;
+			height: 2px;
+			background: #000;
+			transition:  $transition_default ease-in;
+
 		}
 	}
 	&__return-view-popup {
+		display: none;
 		@include desktop-1024 {
+			display: block;
 			opacity: 0;
 			visibility: hidden;
 			padding: 20px;
 			display: flex;
 			position: absolute;
-			top: -65px;
+			top: -85px;
 			left: -150px;
-			background: #fff;
+			color: #fff;
+			background: #ff4c00;
 			cursor: pointer;
 			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
 			transition:  $transition_default ease-out;
+			&:before {
+				content: '';
+				bottom: -20px;
+				right: 32px;
+				position: absolute;
+				width: 0; height: 0;
+				border-left: 10px solid transparent;
+				border-right: 10px solid transparent;
+				border-top: 20px solid #ff4c00;;
+				transition:  all $transition_default ease-out;
+			}
 		}
 
 	}
@@ -693,9 +752,9 @@ export default {
 		}
 	}
 	&__list {
-		margin-top: 30px;
 		padding: 0 30px;
 		@include desktop-1024 {
+			margin-top: 30px;
 			position: relative;
 			min-height: 150px;
 			max-height: 550px;
@@ -704,7 +763,9 @@ export default {
 	}
 	&__list-right-scroll {
 		margin-top: 30px;
+		padding: 0 30px;
 		@include desktop-1024 {
+			padding: 0;
 			position: relative;
 			min-height: 150px;
 			max-height: 550px;
@@ -735,10 +796,10 @@ export default {
 	&__list-item-title {
 		position: relative;
 		padding-left: 15px;
+		font-weight: bold;
 		@include desktop-1024 {
 			padding-left: 0;
 			font-size: 26px;
-			font-weight: bold;
 		}
 		&:before {
 			content: '';
@@ -756,13 +817,15 @@ export default {
 	}
 	&__list-item-description {
 		position: relative;
-		padding: 15px 0 15px 45px;
+		padding-top: 15px;
+		padding-left: 10px;
+		text-indent: 17px;
 		transition:  $transition_default ease-in;
 		&:before {
 			content: '';
 			position: absolute;
-			top: 21px;
-			left: 30px;
+			top: 19px;
+			left: 15px;
 			width: 5px;
 			height: 5px;
 			border-radius: 50%;
@@ -770,7 +833,11 @@ export default {
 		}
 		@include desktop-1024 {
 			padding: 30px 0 30px 30px;
+			width: 490px;
+			text-align: justify;
+			text-indent: 0;
 			&:before {
+				display: none;
 				content: '';
 				position: absolute;
 				top: 34px;
@@ -788,6 +855,7 @@ export default {
 	&__circle {
 		display: none; 
 		@include desktop-1024 {
+			display: block;
 			opacity: 1;
 			visibility: visible;
 			display: flex;
