@@ -14,6 +14,10 @@
 				</nuxt-link>
 				<h1 class="b-content-left__header">{{ subTitle }}</h1>
 				<p class="b-content-left__need-docs">{{ description }}</p>
+				<div class="b-content-left__wheel-arrows"
+					v-bind:class="{'b-content-left__wheel-arrows_hide-wheel-arrows': this.isContainerActive }"
+				>
+				</div>
 			</div>
 		</div>
 		<div class="b-content"
@@ -82,6 +86,9 @@
 					v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
 					@click="changeContentView()"
 				>
+					<div class="b-content__view-popup">
+						Показать полный вид списком
+					</div>
 				
 					<div
 						class="b-content__view-slider"
@@ -99,8 +106,9 @@
 				<div class="b-content__return-view"
 					v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
 					@click="returnDefaultContentView()"
-				
-				></div>
+				>
+					<div class="b-content__return-view-popup">Вернуть компактный вид</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -358,8 +366,22 @@ export default {
 		letter-spacing: 2px;
 		@include desktop-1024 {
 			width: 320px;
+			margin-bottom: 50px;
 		}
-
+	}
+	&__wheel-arrows {
+		@include desktop-1024 {
+			opacity: 1;
+			visibility: visible;
+			background: url("~assets/b-content-left__wheel-arrows.svg") no-repeat;
+			height: 130px;
+			width: 100px;
+			transition:  $transition_default ease-in;
+			&_hide-wheel-arrows {
+				opacity: 0;
+				visibility: hidden;
+			}
+		}
 	}
 }
 
@@ -448,18 +470,147 @@ export default {
 	}
 	&__arrow-up {
 		@include desktop-1024 {
+			position: relative;
 			cursor: pointer;
 			width: 90px;
 			height: 80px;
 			background: #FFFFFF;
+			&:before {
+				content: '';
+				position: absolute;
+				top: 50%;
+				left: 40%;
+				width: 15px;
+				height: 15px;
+				transform: rotate(45deg);
+				border-top: 1px solid;
+				border-left:  1px solid;
+				transition:  $transition_default ease-in;
+			}
 		}
 	}
 	&__arrow-down {
 		@include desktop-1024 {
+			position: relative;
 			cursor: pointer;
 			width: 90px;
 			height: 80px;
-			background: #FFFFFF;
+			background: #FFFFFF;			
+			&:before {
+				content: '';
+				position: absolute;
+				bottom: 50%;
+				left: 40%;
+				width: 15px;
+				height: 15px;
+				transform: rotate(135deg);
+				border-top: 1px solid;
+				border-right:  1px solid;
+				transition:  $transition_default ease-in;
+			}
+		}
+	}
+	&__view-switchers {
+		@include desktop-1024 {
+			opacity: 1;
+			visibility: visible;
+			display: flex;
+			position: absolute;
+			top: 0;
+			right: 0;
+			cursor: pointer;
+			transition:  $transition_default ease-out;
+			&_hide-view-switchers {
+				top: -10px;
+				opacity: 0;
+				visibility: hidden;
+			}
+			&:hover .b-content__view-popup{
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+	}
+	&__view-popup {
+		@include desktop-1024 {
+			opacity: 0;
+			visibility: hidden;
+			padding: 20px;
+			display: flex;
+			position: absolute;
+			top: -85px;
+			left: -150px;
+			background: $nav_bg;
+			color: $nav_color;
+			cursor: pointer;
+			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
+			transition:  $transition_default ease-out;
+		}
+	}
+	&__view-slider {
+		@include desktop-1024 {
+			position: relative;
+			width: 40px;
+			height: 40px;
+			background: $nav_bg;
+			transition:  $transition_default ease-out;
+			&_disactive {
+				background: #e0dfdf;
+				span {
+					background: $nav_bg;
+				}
+			}
+		}
+	}
+	&__view-column {
+		@include desktop-1024 {
+			position: relative;
+			width: 40px;
+			height: 40px;
+			background: #e0dfdf;
+			transition:  $transition_default ease-out;
+			&_active {
+				background: $nav_bg;
+				span {
+					background: #fff;
+					&:before {
+						background: #fff;
+					}
+					&:after {
+						background: #fff;
+					}
+				}
+			}
+		}
+	}
+	&__view-line {
+		@include desktop-1024 {
+			position: absolute;
+			top: 19px;
+			left: 10px;
+			width: 19px;
+			height: 2px;
+			background: #fff;
+			&_type-columns {
+				top: 12px;
+				background: $nav_bg;
+				&:before {
+					content: '';
+					position: absolute;
+					top: 8px;
+					width: 19px;
+					height: 2px;
+					background: $nav_bg;
+				}
+				&:after {
+					content: '';
+					position: absolute;
+					top: 16px;
+					width: 19px;
+					height: 2px;
+					background: $nav_bg;
+				}
+			}
 		}
 	}
 	&__return-view {
@@ -474,13 +625,65 @@ export default {
 			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
 			visibility: hidden;
 			transition:  $transition_default ease-in;
+			&:before {
+				content: '';
+				position: absolute;
+				top: 30px;
+				left: 44px;
+				width: 50px;
+				height: 2px;
+				background: #000;
+				transition:  $transition_default ease-in;
+
+			}
+			&:after {
+				content: '';
+				position: absolute;
+				top: 47px;
+				left: 30px;
+				width: 50px;
+				height: 2px;
+				background: #000;
+				transition:  $transition_default ease-in;
+
+			}
+			&:hover {
+				&:before {
+					top: 30px;
+					left: 36px;
+				}
+				&:after {
+					top: 47px;
+					left: 36px;
+				}	
+			}
 			&_show-return-view {
 				opacity: 1;
 				visibility: visible;
 				left: -95px;
 				top: 50%;
 			}
+			&:hover .b-content__return-view-popup {
+				opacity: 1;
+				visibility: visible;
+			}
 		}
+	}
+	&__return-view-popup {
+		@include desktop-1024 {
+			opacity: 0;
+			visibility: hidden;
+			padding: 20px;
+			display: flex;
+			position: absolute;
+			top: -65px;
+			left: -150px;
+			background: #fff;
+			cursor: pointer;
+			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
+			transition:  $transition_default ease-out;
+		}
+
 	}
 	&__header {
 		padding: 30px 0 30px 30px;
@@ -624,89 +827,6 @@ export default {
 			// 	right: -20px;
 			// 	background: $nav_bg;
 			// }
-		}
-	}
-	&__view-switchers {
-		@include desktop-1024 {
-			opacity: 1;
-			visibility: visible;
-			display: flex;
-			position: absolute;
-			top: 0;
-			right: 0;
-			cursor: pointer;
-			transition:  $transition_default ease-out;
-			&_hide-view-switchers {
-				top: -10px;
-				opacity: 0;
-				visibility: hidden;
-			}
-		}
-	}
-	&__view-slider {
-		@include desktop-1024 {
-			position: relative;
-			width: 40px;
-			height: 40px;
-			background: $nav_bg;
-			transition:  $transition_default ease-out;
-			&_disactive {
-				background: #e0dfdf;
-				span {
-					background: $nav_bg;
-				}
-			}
-		}
-	}
-	&__view-column {
-		@include desktop-1024 {
-			position: relative;
-			width: 40px;
-			height: 40px;
-			background: #e0dfdf;
-			transition:  $transition_default ease-out;
-			&_active {
-				background: $nav_bg;
-				span {
-					background: #fff;
-					&:before {
-						background: #fff;
-					}
-					&:after {
-						background: #fff;
-					}
-				}
-			}
-		}
-	}
-	&__view-line {
-		@include desktop-1024 {
-			position: absolute;
-			top: 19px;
-			left: 10px;
-			width: 19px;
-			height: 2px;
-			background: #fff;
-			&_type-columns {
-				top: 12px;
-				background: $nav_bg;
-				&:before {
-					content: '';
-					position: absolute;
-					top: 8px;
-					width: 19px;
-					height: 2px;
-					background: $nav_bg;
-				}
-				&:after {
-					content: '';
-					position: absolute;
-					top: 16px;
-					width: 19px;
-					height: 2px;
-					background: $nav_bg;
-				}
-			}
 		}
 	}
 }
