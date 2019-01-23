@@ -1,27 +1,21 @@
 <template>
-  	<section class="container">
-		<div>
-			<navbar/>
-		<!-- <logo/> -->
-			<h1 class="title">
-			aleton-nuxt-ssr
-			</h1>
-			<h2 class="subtitle">
-			My mathematical Nuxt.js project
-			</h2>
-			<div class="links">
-				<nuxt-link to="/patent">Патенты</nuxt-link>
-			</div>
-		</div>
-	</section>
+	<div class="b-main">
+		<navbar/>
+		<mainslider/>
+		<copyright/>
+	</div>
 </template>
 
 <script>
 import Navbar from '~/components/Navbar.vue'
+import Mainslider from '~/components/Mainslider.vue'
+import Copyright from '~/components/Copyright.vue'
 
 export default {
 	components: {
-		Navbar
+		Navbar,
+		Mainslider,
+		Copyright
 	},
 	data () {
 		return {
@@ -39,3 +33,17 @@ export default {
 	}
 }
 </script>
+
+<style lang="scss">
+@import "~/assets/sass/base/_variables.scss";
+@import "~/assets/sass/base/_settings.scss";
+@import "~/assets/sass/base/_mixins.scss";
+@import "~/assets/sass/base/_variables.scss";
+
+.b-main {
+	@include desktop-1024 {
+		display: flex;
+	}
+}
+
+</style>

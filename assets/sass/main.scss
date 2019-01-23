@@ -4,15 +4,22 @@
 @import 'base/reset';
 
 body{
-	background: #eee;
 	font-family: 'Roboto', sans-serif;
+
 	a {
 		color: $link_default_color_hover;
 	}
+	p {
+		font-size: 18px;
+	}
+}
+
+* {
+	box-sizing: border-box;
 }
 
 .page-enter-active, .page-leave-active {
-	transition: opacity .2s;
+	transition: opacity .5s;
 }
 .page-enter, .page-leave-active {
 	opacity: 0;
