@@ -275,7 +275,7 @@ export default {
 		@include desktop-1024 {
 			cursor: pointer;
 			top: $nav_desktop_indent;
-			right: calc( 50% / 2);
+			right: $nav_desktop_indent;
 		}
 		&_active-toggle{
 			@include desktop-1024 {

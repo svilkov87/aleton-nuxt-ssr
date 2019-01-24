@@ -278,8 +278,8 @@ export default {
 		transform: rotate(90deg);
 		transition:  $transition_default ease-out;
 		@include desktop-1024 {
+			display: none;
 			cursor: pointer;
-			// position: fixed;
 			top: $nav_desktop_indent;
 			right: $nav_desktop_indent;
 		}
@@ -291,15 +291,18 @@ export default {
 						border-radius: 0%;
 						width: 25px;
 						height: 2px;
+						background: #fff;
 						&:before {
 							border-radius: 0%;
 							width: 25px;
 							height: 2px;
+							background: #fff;
 						}
 						&:after {
 							border-radius: 0%;
 							width: 25px;
 							height: 2px;
+							background: #fff;
 						}
 					}
 			}

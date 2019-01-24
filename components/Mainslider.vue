@@ -91,8 +91,7 @@
 .b-slider {
 	position: absolute;
 	opacity: 0;
-	visibility: hidden;
-	// bottom: 0px;
+	// visibility: hidden;
 	top: 40px;
 	width: 100%;
 	height: 650px;
@@ -103,7 +102,7 @@
 	transition-delay: .5s;
 	@include desktop-1024 {
 		opacity: 1;
-		visibility: visible;
+		// visibility: visible;
 		top: 0;
 		right: 0;
 		height: 100vh;
@@ -161,6 +160,7 @@
 			left: 30px;
 			border: 1px solid $nav_bg;
 			border-radius: 50%;
+			transition:  $transition_default ease-in;
 			@include desktop-1024 {
 				top: 15px;
 			}
@@ -175,12 +175,10 @@
 			@include desktop-1024 {
 				background: #fff;
 				color: #000;
-				// transform: scale(1.1);
 				border-bottom: none; 
-				// box-shadow:  0px 0px 30px 10px rgba(0, 0, 0, 0.15);
 				&:before {
 					border: none;
-					background: red;
+					background: #000;
 				}
 			}
 		}
@@ -189,7 +187,7 @@
 			color: #000;
 			@include desktop-1024 {
 				color: #000;
-				border-bottom: 1px solid $nav_bg; 
+				transition:  $transition_default ease-in;
 			}
 			&:before {
 				content: '';
@@ -198,7 +196,6 @@
 				height: 9px;
 				top: 22px;
 				left: 28px;
-				// background: $nav_bg;
 				background: #03841c;
 				border-radius: 50%;
 				border: none;

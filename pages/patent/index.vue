@@ -700,7 +700,7 @@ export default {
 			left: 35px;
 			width: 50px;
 			height: 2px;
-			background: #000;
+			background: #7f828b;
 			transition:  $transition_default ease-in;
 		&:before {
 			content: '';
@@ -709,7 +709,7 @@ export default {
 			left: 15px;
 			width: 50px;
 			height: 2px;
-			background: #000;
+			background: #7f828b;
 			transition:  $transition_default ease-in;
 
 		}
@@ -798,7 +798,8 @@ export default {
 		padding-left: 15px;
 		font-weight: bold;
 		@include desktop-1024 {
-			padding-left: 0;
+			width: 490px;
+			padding-left: 30px;
 			font-size: 26px;
 		}
 		&:before {
@@ -834,7 +835,7 @@ export default {
 		@include desktop-1024 {
 			padding: 30px 0 30px 30px;
 			width: 490px;
-			text-align: justify;
+			color: #424141;
 			text-indent: 0;
 			&:before {
 				display: none;
