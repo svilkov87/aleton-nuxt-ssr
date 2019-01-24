@@ -1,11 +1,11 @@
 <template>
 	<div class="b-main-content" @wheel="wheel"
-		v-bind:class="{'b-main-content_hide-bg': this.isContainerActive }"
-	>
+                        v-bind:class="{'b-main-content_hide-bg': this.isContainerActive }"
+                >
 		<navbarpatent/>
 		<div class="b-content-left"
-			v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
-		>
+                                v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
+                        >
 			<div class="b-content-left__info-block">
 				<nuxt-link to="/">
 					<span class="b-content-left__logo">
@@ -15,18 +15,17 @@
 				<h1 class="b-content-left__header">{{ subTitle }}</h1>
 				<p class="b-content-left__need-docs">{{ description }}</p>
 				<div class="b-content-left__wheel-arrows"
-					v-bind:class="{'b-content-left__wheel-arrows_hide-wheel-arrows': this.isContainerActive }"
-				>
+                                                v-bind:class="{'b-content-left__wheel-arrows_hide-wheel-arrows': this.isContainerActive }"
+                                        >
 				</div>
 			</div>
 		</div>
 		<div class="b-content"
 			v-bind:class="{'b-content_dominate': this.isContainerActive }">
 			<div class="b-content__container"
-				v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
-			>
-			<h1 class="b-content__header">{{ subTitle }}</h1>
-				
+                                        v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
+                                >
+			        <h1 class="b-content__header">{{ subTitle }}</h1>
 				<ul
 					v-bind:class="[ !listBySlider ? {'b-content__list-right-scroll':  !listBySlider} : {'b-content__list':  listBySlider} ]"
 				>
@@ -45,21 +44,21 @@
 							{{ item.title }}
 						</p>
 						<p
-							v-if="item.description"
-						 	class="b-content__list-item-description"
-						>
+                                                         v-if="item.description"
+                                                         class="b-content__list-item-description"
+                                                        >
 							 {{ item.description }}
 						 </p>
 					</li>
 				</ul>
 				<div class="b-content__counter"
-					v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
-				>
+                                                v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
+                                        >
 					{{ contentCounter + 1 }} / {{ this.contentArray.length }}
 				</div>
 				<div class="b-content__arrows-wrapper"
-					v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
-				>
+                                                v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
+                                        >
 					<div class="b-content__arrow-up"
 						@click="counterDown()"
 					>
@@ -82,10 +81,10 @@
 					</div>
 				</div>
 				<div 
-					class="b-content__view-switchers"
-					v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
-					@click="changeContentView()"
-				>
+                                                class="b-content__view-switchers"
+                                                v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
+                                                @click="changeContentView()"
+                                        >
 					<div class="b-content__view-popup">
 						Показать полный вид списком
 					</div>
@@ -104,9 +103,9 @@
 					</div>
 				</div>
 				<div class="b-content__return-view"
-					v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
-					@click="returnDefaultContentView()"
-				>	
+                                                v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
+                                                @click="returnDefaultContentView()"
+                                        >	
 					<span class="b-content__return-view-span"></span>
 					<div class="b-content__return-view-popup">Вернуть компактный вид</div>
 				</div>
@@ -127,10 +126,10 @@ export default {
 	data () {
 		return {
 			title: 'Алетон',
-			subTitle: 'РВП',
-			description: 'Для получения РВП иностранный гражданин предоставляет следующие документы:',
+			subTitle: 'ВИД НА ЖИТЕЛЬСТВО',
+			description: 'Для получения вида на жительство иностранный гражданин предоставляет следующие документы:',
 			contentCounter: 0,
-			needDocs: 'Для получения РВП иностранный гражданин предоставляет следующие документы:',
+			needDocs: 'Для получения вида на жительство иностранный гражданин предоставляет следующие документы:',
 			isHideViewSwitcher: false,
 			isHideCounterBlock: false,
 			isHideArrows: false,
@@ -141,39 +140,45 @@ export default {
 			contentArray: [
 				{
 					title: 'Заявление',
-					description: '( приложение №2 к Административному регламенту ) в двух экземплярах',
+					description: '( приложение №1 к Административному регламенту ) в двух экземплярах',
 					isVisible: true,
 					position: 0
 				},
 				{
 					title: 'Фото',
-					description: 'Две личные фотографии размером 35*45мм в черно-белом или цветном исполнении с четким изображением лица анфас без головного убора',
+					description: 'Четыре личные фотографии размером 35*45мм в черно-белом или цветном исполнении с четким изображением лица анфас без головного убора',
 					isVisible: false,
 					position: 1
 				},
 				{
-					title: 'Документ, удостоверяющий личность с нотариальо заверенным переводом',
-					description: 'Обычно это паспорт, водительское удостоверение, военный билет',
+					title: 'Документ,  удостоверяющий личность',
+					description: '... с нотариально заверенным переводом.',
 					isVisible: false,
 					position: 2
 				},
 				{
-					title: 'Документ об отсутствии судимости',
-					description: '... выданный не ранее 3 месяцев на день подачи заявления о выдаче разрешения полномочным органом государства постоянного проживания, подтверждающий отсутствие судимости у заявителя',
+					title: 'Документ, подтверждающий наличие законного источника стредств к существованию',
+					description: '... позволяющего содержать себя в Российской Федерации в пределах прожиточного минимума, или документ, подтверждающий нетрудоспособность заявителя. Такими документами являются: справка о доходах физического лица, справка с места работы, пенсионное удостоверение, справка территориального органа Пенсионного фонда Российской федерации, подтверждающая факт установления пенсии, подтвеждение получения алиментов, справка о доходах лица, на иждивении которого находится заявитель, справка о наличии банковского вклада с указанием номера счета и суммы вклада, иной документ, подтверждающий получение доходов от не запрещенной законом деятельности или нетрудоспособность. Банковский вклад должен подтвеждать наличие у иностранного гражданина на срок предоставления государственной услуги денежных средств в размере не ниже прожиточного минимума, установленного законом субъекта Российской Федерации, на территории которого иностранный гражданин обращается с заявлением.',
 					isVisible: false,
 					position: 3
+                                },
+				{
+					title: 'Право собственности на жилое помещение',
+					description: 'Документ, подтвеждающий наличие права собственности ( иного права ) на жилое помещение, если сведения, содержащиеся в нем, не находятся в распоряжении государственных органов и органов местного самоуправления ( представляется иностранным гражданином, обращающимся с заявлением по истечении трех лет со дня въезда в Российскую Федерацию )',
+					isVisible: false,
+					position: 4
 				},
 				{
 					title: 'Подтверждение отсутствия заболеваний',
 					description: 'Документы, подтврдающие отсутствие у иностранного гражданина, подающего заявление, заболевания наркоманией и инфекционных заболеваний, которые представляют опасность для окружающих, предусмотренных перечнем, утверждаемым уполномоченным Правительством Российской Федерации федеральным органом исполнительной власти, а также сертификт об отсутствии у заявителя заболевания, вызванного вирусом имунодефицита человека ( ВИЧ - нифекции )',
 					isVisible: false,
-					position: 4
+					position: 5
 				},
 				{
 					title: 'Подтверждение знания русского языка и законодательства',
 					description: 'Документ, подтверждающий владение иностранним гражданином русским языком, знание истории России и основ законодательства Российской Федерации',
 					isVisible: false,
-					position: 5
+					position: 6
 				},
 			],
 		}
@@ -363,6 +368,7 @@ export default {
     		margin-bottom: 50px;
 	}
 	&__header {
+                width: 230px;
 		margin-bottom: 30px;
 		letter-spacing: 2px;
 	}
@@ -811,6 +817,7 @@ export default {
 		@include desktop-1024 {
 			width: 490px;
 			padding-left: 30px;
+			// font-size: 26px;
 		}
 		&:before {
 			content: '';
