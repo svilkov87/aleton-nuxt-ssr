@@ -3,15 +3,19 @@
 		v-bind:class="{ 'b-slider_active-content ':this.$store.state.isShowContent }"
 	>
 		<div class="b-slider__bg"></div>
-		<nuxt-link 
-			v-for="item in getSliderData ()"
-			:key="item.position"
-			:to="item.url"
-			exact-active-class="b-slider__grid-item_acrive-grid"
-			class="b-slider__grid-item"
-		>
-			{{ item.text }}
-		</nuxt-link>
+		<div class="b-slider__info-block">
+			<div class="b-slider__wrapper">
+				<nuxt-link 
+					v-for="item in getSliderData ()"
+					:key="item.position"
+					:to="item.url"
+					exact-active-class="b-slider__grid-item_acrive-grid"
+					class="b-slider__grid-item"
+				>
+					{{ item.text }}
+				</nuxt-link>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -87,8 +91,7 @@
 .b-slider {
 	position: absolute;
 	opacity: 0;
-	visibility: hidden;
-	// bottom: 0px;
+	// visibility: hidden;
 	top: 40px;
 	width: 100%;
 	height: 650px;
@@ -99,15 +102,14 @@
 	transition-delay: .5s;
 	@include desktop-1024 {
 		opacity: 1;
-		visibility: visible;
+		// visibility: visible;
 		top: 0;
 		right: 0;
 		height: 100vh;
 		width: 50%;
 		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
+		align-items: flex-start;
+		// align-items: center;
 		bottom: 100px;
 	}
 	&__bg {
@@ -117,24 +119,35 @@
 			left: 0;
 			right: 0;
 			bottom: 0;
-			// background: url("~assets/b-nav__bg_1.jpg") no-repeat;
-			// background: url("~assets/bg.png") no-repeat;
-			// background-size: cover;
-			// filter: blur(3px);
 		}
 	}
 	&_active-content {
 		opacity: 1;
 		visibility: visible;
-		// bottom: 50px;
 		top: 0;
+	}
+	&__info-block {
+		@include desktop-1024 {
+			min-width: 430px;
+			max-width: 430px;
+			color: #d2d2d2;
+		}
+	}
+	&__wrapper {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		@include desktop-1024 {
+			margin-left: 100px;
+		}
 	}
 	&__grid-item {
 		position: relative;
 		width: 100%;
-		// margin: 5px;
 		padding-left: 50px;
 		color: #000;
+		margin-bottom: 5px;
 		text-transform: uppercase;
 		font-weight: bold;
 		line-height: 58px;
@@ -147,35 +160,34 @@
 			left: 30px;
 			border: 1px solid $nav_bg;
 			border-radius: 50%;
+			transition:  $transition_default ease-in;
 			@include desktop-1024 {
-				top: 30px;
+				top: 15px;
 			}
 		}
 		
 		@include desktop-1024 {
 			color: #000;
-			width: 50%;
-			line-height: 70px;
+			line-height: 40px;
 			transition:  all .2s ease-in-out;
 		}
 		&:hover {
 			@include desktop-1024 {
 				background: #fff;
 				color: #000;
-				transform: scale(1.1);
 				border-bottom: none; 
-				box-shadow:  0px 0px 30px 10px rgba(0, 0, 0, 0.15);
+				&:before {
+					border: none;
+					background: #000;
+				}
 			}
 		}
 
 		&_acrive-grid {
 			color: #000;
 			@include desktop-1024 {
-				// background: #fff;
 				color: #000;
-				// color: #fff;
-				border-bottom: 1px solid $nav_bg; 
-				// border-bottom: 1px solid #fff; 
+				transition:  $transition_default ease-in;
 			}
 			&:before {
 				content: '';
@@ -184,11 +196,11 @@
 				height: 9px;
 				top: 22px;
 				left: 28px;
-				background: $nav_bg;
+				background: #03841c;
 				border-radius: 50%;
 				border: none;
 				@include desktop-1024 {
-					top: 30px;
+					top: 15px;
 				}
 			}
 		}

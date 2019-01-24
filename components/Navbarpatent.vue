@@ -203,7 +203,6 @@ export default {
 @import "~/assets/sass/base/_variables.scss";
 
 .b-nav-content {
-	// position: absolute;
 	position: fixed;
 	top: -560px;
 	left: 0;
@@ -276,9 +275,7 @@ export default {
 		@include desktop-1024 {
 			cursor: pointer;
 			top: $nav_desktop_indent;
-                        // right: 250px;
-                        // left: calc(30% - 80px);
-			right: calc( 50% / 2 );
+			right: $nav_desktop_indent;
 		}
 		&_active-toggle{
 			@include desktop-1024 {
@@ -474,7 +471,7 @@ export default {
 		transition: all $transition_default ease-in-out;
 		@include desktop-1024 {
 			position: absolute !important;
-			top: 125px;
+			top: 200px;
 			right: 0;
 			width: 70%;
 			max-width: 70%;
