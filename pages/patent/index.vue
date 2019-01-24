@@ -824,7 +824,6 @@ export default {
 		@include desktop-1024 {
 			width: 490px;
 			padding-left: 30px;
-			font-size: 26px;
 		}
 		&:before {
 			content: '';
