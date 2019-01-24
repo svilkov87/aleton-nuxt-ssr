@@ -55,7 +55,7 @@
 				<div class="b-content__counter"
 					v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
 				>
-					{{ contentCounter + 1 }} / 20
+					{{ contentCounter + 1 }} / {{ this.contentArray.length }}
 				</div>
 				<div class="b-content__arrows-wrapper"
 					v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
