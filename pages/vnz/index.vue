@@ -437,7 +437,6 @@ export default {
 			width: 652px;
 			// height: 640px;
 			height: 100vh;
-			padding: 20px;
 			background: #fff;
 			box-shadow: 20px 10px 100px rgba(0, 0, 0, 0.25);
 			transition:  $transition_default ease-in;
@@ -460,7 +459,8 @@ export default {
 			position: absolute;
 			line-height: 114px;
 			text-align: center;
-			width: 138px;
+			font-weight: bold;
+			width: 114px;
 			height: 114px;
 			left: -90px;
 			bottom: 100px;
@@ -560,7 +560,7 @@ export default {
 				transition:  all $transition_default ease-out;
 			}
 			&_hide-view-switchers {
-				top: -10px;
+				top: 115px;
 				opacity: 0;
 				visibility: hidden;
 				&:before {
@@ -790,7 +790,7 @@ export default {
 			overflow-y: scroll;
 			// overflow: hidden;
 			height: inherit;
-			margin-top: 30px;
+			margin-top: 100px;
 			position: relative;
 			// height: 450px;
 			// min-height: 150px;
@@ -804,10 +804,11 @@ export default {
 		margin-top: 30px;
 		padding: 0 30px;
 		@include desktop-1024 {
-			padding: 0;
+			// padding: 0;
+			margin-top: 100px;
 			position: relative;
-			min-height: 150px;
-			max-height: 550px;
+			// min-height: 150px;
+			// max-height: 550px;
 			overflow-y: scroll;
 
 		}
