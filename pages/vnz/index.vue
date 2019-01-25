@@ -40,13 +40,13 @@
 							{{ item.title }}
 						</p>
 						<div class="b-content__list-item-description-wrapper"
-							v-bind:class="[ { 'b-content__list-item-description-wrapper_hide-list-item-description-wrapper': item.isHidden } ]"
+							v-bind:class="[ { 'b-content__list-item-description-wrapper_hide-list-item-description-wrapper': !item.isHidden } ]"
 							>
 							<p
 								v-if="item.description"
 								class="b-content__list-item-description"
 								v-bind:class="[ 
-									{ 'b-content__list-item-description_hide-list-item-description ': item.isHidden } 
+									{ 'b-content__list-item-description_hide-list-item-description ': !item.isHidden } 
 								]"
 								
 								>
@@ -239,30 +239,30 @@ export default {
 		},
 		wheel (ev) {
 
-                        let activeArray    = this.activeContentArray
-			let defaultArray =  this.contentArray
+                        // let activeArray    = this.activeContentArray
+			// let defaultArray =  this.contentArray
 
-			if ( this.listBySlider ) {
-				if ( ev.deltaY <  0 ) {
+			// if ( this.listBySlider ) {
+			// 	if ( ev.deltaY <  0 ) {
 
-					this.contentCounter++
+			// 		this.contentCounter++
 
-					if(  this.contentCounter >= defaultArray.length ) {
-					         this.contentCounter = defaultArray.length 
-					}  
-					defaultArray[ this.contentCounter - 1 ].isHidden = true
-				} 
-				else {		
+			// 		if(  this.contentCounter >= defaultArray.length ) {
+			// 		         this.contentCounter = defaultArray.length 
+			// 		}  
+			// 		defaultArray[ this.contentCounter - 1 ].isHidden = true
+			// 	} 
+			// 	else {		
 
-					this.contentCounter--
+			// 		this.contentCounter--
 
-					if(  this.contentCounter <= 0 ) {
-					         this.contentCounter = 0
-					}
-					defaultArray[ this.contentCounter ].isHidden = false
+			// 		if(  this.contentCounter <= 0 ) {
+			// 		         this.contentCounter = 0
+			// 		}
+			// 		defaultArray[ this.contentCounter ].isHidden = false
 
-				}	
-			}
+			// 	}	
+			// }
 		},
 		contentData(){
 			return this.contentArray
@@ -352,9 +352,11 @@ export default {
 .b-content-left {
 	display: none;
 	@include desktop-1024 {
-		position: absolute;
+		// position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
+		bottom: 0;
 		width: 50%;
 		height: 100vh;
 		display: flex;
@@ -430,21 +432,21 @@ export default {
 	&__container {
 		position: relative;
 		@include desktop-1024 {
-			position: relative;
+			position: fixed;
 			margin-left: -50px;
 			width: 652px;
-			height: 575px;
-			height: auto;
+			// height: 640px;
+			height: 100vh;
 			padding: 20px;
 			background: #fff;
 			box-shadow: 20px 10px 100px rgba(0, 0, 0, 0.25);
 			transition:  $transition_default ease-in;
 			&_active-container {
-				padding: 150px 20px 0 20px;
+				// padding: 150px 20px 0 20px;
 				margin-left: 0;
-				top: 0;
-				right: 0;
-   				width: 100%;
+				// top: 0;
+				// right: 0;
+   				width: 60%;
 				height: 100vh;
 			}
 		}
@@ -482,7 +484,7 @@ export default {
 			width: 90px;
 			height: 160px;
 			right: -70px;
-			top: 50px;
+			top: 190px;
 			background: #FFFFFF;
 			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
 			transition:  $transition_default ease-in;
@@ -541,8 +543,8 @@ export default {
 			visibility: visible;
 			display: flex;
 			position: absolute;
-			top: 0;
-			right: 0;
+			top: 130px;
+			right: -25px;
 			cursor: pointer;
 			transition:  $transition_default ease-out;
 			&:before {
@@ -785,13 +787,17 @@ export default {
 	&__list {
 		padding: 0 30px;
 		@include desktop-1024 {
+			overflow-y: scroll;
+			// overflow: hidden;
+			height: inherit;
 			margin-top: 30px;
 			position: relative;
-			min-height: 150px;
-                        max-height: 550px;
-                        display: flex;
-                        flex-direction: column;
-			// overflow-y: scroll;
+			// height: 450px;
+			// min-height: 150px;
+                        // max-height: 650px;
+                        // display: flex;
+                        // flex-direction: column;
+			// justify-content: flex-end;
 		}
 	}
 	&__list-right-scroll {
@@ -846,7 +852,8 @@ export default {
 		@include desktop-1024 {
 			max-height: 100em;
 			overflow: hidden;
-			transition: max-height .85s;
+			// transition: max-height 1.2s;
+			transition: all 1.2s ease-in-out;
 			&_hide-list-item-description-wrapper {
 				max-height: 0;
 			}
@@ -870,10 +877,11 @@ export default {
 			background: $nav_bg_mobile;
 		}
 		@include desktop-1024 {
-			padding: 0 30px;
+			padding: 10px 30px 0 30px;
 			// padding: 30px 0 30px 30px;
 			width: 490px;
 			line-height: 20px;
+			font-size: 16px;
 			color: #424141;
 			text-indent: 0;
 			&:before {
