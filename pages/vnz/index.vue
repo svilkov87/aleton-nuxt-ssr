@@ -33,9 +33,38 @@
 						class="b-content__list-item"
 						v-for="( item, index ) in contentData()"
 						:key="item.title"
+                                                v-bind:class="[ { 'b-content__list-item_opacity ': !item.isHidden } ]"
+					>
+						<p class="b-content__list-item-title">
+							<span>{{ index + 1 }}.</span>
+							{{ item.title }}
+						</p>
+						<div class="b-content__list-item-description-wrapper"
+							v-bind:class="[ { 'b-content__list-item-description-wrapper_hide-list-item-description-wrapper': item.isHidden } ]"
+							>
+							<p
+								v-if="item.description"
+								class="b-content__list-item-description"
+								v-bind:class="[ 
+									{ 'b-content__list-item-description_hide-list-item-description ': item.isHidden } 
+								]"
+								
+								>
+								{{ item.description }}
+							</p>
+						</div>
+					</li>
+				</ul>
+				<!-- <ul
+					v-bind:class="[ !listBySlider ? {'b-content__list-right-scroll':  !listBySlider} : {'b-content__list':  listBySlider} ]"
+				>
+					<li 
+						class="b-content__list-item"
+						v-for="( item, index ) in contentData()"
+						:key="item.title"
 						v-bind:class="[ 
 							listBySlider
-							? { 'b-content__list-item_hide ': !item.isVisible } 
+							? { 'b-content__list-item_hide ': !item.isHidden } 
 							: { 'b-content__list-item_column ': !listBySlider }
 						]"
 					>
@@ -50,11 +79,11 @@
 							 {{ item.description }}
 						 </p>
 					</li>
-				</ul>
+				</ul> -->
 				<div class="b-content__counter"
                                                 v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
                                         >
-					{{ contentCounter + 1 }} / {{ this.contentArray.length }}
+					{{ contentCounter  }} / {{ this.contentArray.length }}
 				</div>
 				<div class="b-content__arrows-wrapper"
                                                 v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
@@ -75,7 +104,8 @@
 					<div class="b-content__circle-item"
 						v-for="( item, index ) in contentData()"
 						:key="item.tiposition"
-						v-bind:class="{'b-content__circle-item_show': item.isVisible }"
+						v-bind:class="{'b-content__circle-item_show': item.isHidden}"
+						
 						@click="counterIndex( index )"
 					>
 					</div>
@@ -136,48 +166,49 @@ export default {
 			isContainerActive: false,
 			returnSliderView: false,
 			isHideCircles: false,
-			listBySlider: true,
+                        listBySlider: true,
+                        leftColStyles: { },
 			contentArray: [
 				{
 					title: 'Заявление',
 					description: '( приложение №1 к Административному регламенту ) в двух экземплярах',
-					isVisible: true,
+					isHidden: false,
 					position: 0
 				},
 				{
 					title: 'Фото',
 					description: 'Четыре личные фотографии размером 35*45мм в черно-белом или цветном исполнении с четким изображением лица анфас без головного убора',
-					isVisible: false,
+					isHidden: false,
 					position: 1
 				},
 				{
 					title: 'Документ,  удостоверяющий личность',
 					description: '... с нотариально заверенным переводом.',
-					isVisible: false,
+					isHidden: false,
 					position: 2
 				},
 				{
 					title: 'Документ, подтверждающий наличие законного источника стредств к существованию',
 					description: '... позволяющего содержать себя в Российской Федерации в пределах прожиточного минимума, или документ, подтверждающий нетрудоспособность заявителя. Такими документами являются: справка о доходах физического лица, справка с места работы, пенсионное удостоверение, справка территориального органа Пенсионного фонда Российской федерации, подтверждающая факт установления пенсии, подтвеждение получения алиментов, справка о доходах лица, на иждивении которого находится заявитель, справка о наличии банковского вклада с указанием номера счета и суммы вклада, иной документ, подтверждающий получение доходов от не запрещенной законом деятельности или нетрудоспособность. Банковский вклад должен подтвеждать наличие у иностранного гражданина на срок предоставления государственной услуги денежных средств в размере не ниже прожиточного минимума, установленного законом субъекта Российской Федерации, на территории которого иностранный гражданин обращается с заявлением.',
-					isVisible: false,
+					isHidden: false,
 					position: 3
                                 },
 				{
 					title: 'Право собственности на жилое помещение',
 					description: 'Документ, подтвеждающий наличие права собственности ( иного права ) на жилое помещение, если сведения, содержащиеся в нем, не находятся в распоряжении государственных органов и органов местного самоуправления ( представляется иностранным гражданином, обращающимся с заявлением по истечении трех лет со дня въезда в Российскую Федерацию )',
-					isVisible: false,
+					isHidden: false,
 					position: 4
 				},
 				{
 					title: 'Подтверждение отсутствия заболеваний',
 					description: 'Документы, подтврдающие отсутствие у иностранного гражданина, подающего заявление, заболевания наркоманией и инфекционных заболеваний, которые представляют опасность для окружающих, предусмотренных перечнем, утверждаемым уполномоченным Правительством Российской Федерации федеральным органом исполнительной власти, а также сертификт об отсутствии у заявителя заболевания, вызванного вирусом имунодефицита человека ( ВИЧ - нифекции )',
-					isVisible: false,
+					isHidden: false,
 					position: 5
 				},
 				{
 					title: 'Подтверждение знания русского языка и законодательства',
 					description: 'Документ, подтверждающий владение иностранним гражданином русским языком, знание истории России и основ законодательства Российской Федерации',
-					isVisible: false,
+					isHidden: false,
 					position: 6
 				},
 			],
@@ -185,69 +216,51 @@ export default {
 	},
 	methods: {
 		counterUp() {
+                        let activeArray    = this.activeContentArray
+			let defaultArray =  this.contentArray
+
 			this.contentCounter++
 
-			if( this.contentCounter >= this.contentArray.length - 1 ) {
-			this.contentCounter = this.contentArray.length - 1
-			}
-
-			if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-			this.contentArray[ this.contentCounter ].isVisible = true
-			} 
-			if ( this.contentCounter - 1 == this.contentArray[ this.contentCounter - 1 ].position ) {
-			this.contentArray[ this.contentCounter - 1 ].isVisible = false   
-			}
+			if(  this.contentCounter >= defaultArray.length ) {
+					this.contentCounter = defaultArray.length 
+			}  
+			defaultArray[ this.contentCounter - 1 ].isHidden = true
+			
 		},
 		counterDown() {
+			let activeArray    = this.activeContentArray
+			let defaultArray =  this.contentArray
 			this.contentCounter--
 
-			if( this.contentCounter <= 0 ) {
-				this.contentCounter = 0
-				this.contentArray[ this.contentCounter ].isVisible = true
+			if(  this.contentCounter <= 0 ) {
+					this.contentCounter = 0
 			}
-
-			if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-				this.contentArray[ this.contentCounter ].isVisible = true
-			} 
-			if ( this.contentCounter + 1 == this.contentArray[ this.contentCounter + 1 ].position ) {
-				this.contentArray[ this.contentCounter + 1 ].isVisible = false   
-			}
+			defaultArray[ this.contentCounter ].isHidden = false
 		},
 		wheel (ev) {
-			if (this.listBySlider) {
-				if (ev.deltaY >  0) {
-					this.pos = 'вверх' 
-					console.log( this.pos )
+
+                        let activeArray    = this.activeContentArray
+			let defaultArray =  this.contentArray
+
+			if ( this.listBySlider ) {
+				if ( ev.deltaY <  0 ) {
+
 					this.contentCounter++
 
-					if( this.contentCounter >= this.contentArray.length - 1 ) {
-					this.contentCounter = this.contentArray.length - 1
-					}
-
-					if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-					this.contentArray[ this.contentCounter ].isVisible = true
-					} 
-					if ( this.contentCounter - 1 == this.contentArray[ this.contentCounter - 1 ].position ) {
-					this.contentArray[ this.contentCounter - 1 ].isVisible = false   
-					}
-
+					if(  this.contentCounter >= defaultArray.length ) {
+					         this.contentCounter = defaultArray.length 
+					}  
+					defaultArray[ this.contentCounter - 1 ].isHidden = true
 				} 
-				else {
+				else {		
+
 					this.contentCounter--
-					this.pos = 'вниз'
-					console.log( this.pos )
 
-					if( this.contentCounter <= 0 ) {
-						this.contentCounter = 0
-						this.contentArray[ this.contentCounter ].isVisible = true
+					if(  this.contentCounter <= 0 ) {
+					         this.contentCounter = 0
 					}
+					defaultArray[ this.contentCounter ].isHidden = false
 
-					if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-						this.contentArray[ this.contentCounter ].isVisible = true
-					} 
-					if ( this.contentCounter + 1 == this.contentArray[ this.contentCounter + 1 ].position ) {
-						this.contentArray[ this.contentCounter + 1 ].isVisible = false   
-					}
 				}	
 			}
 		},
@@ -420,7 +433,8 @@ export default {
 			position: relative;
 			margin-left: -50px;
 			width: 652px;
-			height: 475px;
+			height: 575px;
+			height: auto;
 			padding: 20px;
 			background: #fff;
 			box-shadow: 20px 10px 100px rgba(0, 0, 0, 0.25);
@@ -774,7 +788,9 @@ export default {
 			margin-top: 30px;
 			position: relative;
 			min-height: 150px;
-			max-height: 550px;
+                        max-height: 550px;
+                        display: flex;
+                        flex-direction: column;
 			// overflow-y: scroll;
 		}
 	}
@@ -792,32 +808,25 @@ export default {
 	}
 	&__list-item{
 		padding: 15px 0;
-		// padding: 15px;
-		transition:  $transition_default ease-in;
+		transition:  1.5s  ease-in;
 		@include desktop-1024 {
-			position: absolute;
-			padding: 15px;
-			top: 0;
-			left: 0;
-			&_hide {
-				color: #fff;
-				top: 30px;
-				opacity: 0;
-				visibility: hidden;
+                        position: relative;
+			&_opacity {
+                                // filter: opacity(30%);
 			}
 			&_column {
 				position: relative;
 			}
 		}
-	}
+        }
 	&__list-item-title {
 		position: relative;
 		padding-left: 15px;
 		font-weight: bold;
 		@include desktop-1024 {
 			width: 490px;
-			padding-left: 30px;
-			// font-size: 26px;
+                        padding-left: 30px;
+			transition:  all 1s ease-in;
 		}
 		&:before {
 			content: '';
@@ -833,12 +842,23 @@ export default {
 			}
 		}
 	}
+	&__list-item-description-wrapper {
+		@include desktop-1024 {
+			max-height: 100em;
+			overflow: hidden;
+			transition: max-height .85s;
+			&_hide-list-item-description-wrapper {
+				max-height: 0;
+			}
+		}
+	}
 	&__list-item-description {
 		position: relative;
 		padding-top: 15px;
 		padding-left: 10px;
 		text-indent: 17px;
-		transition:  $transition_default ease-in;
+		// transition:  $transition_default ease-in;
+		transition:  all 1s ease-in;
 		&:before {
 			content: '';
 			position: absolute;
@@ -850,7 +870,8 @@ export default {
 			background: $nav_bg_mobile;
 		}
 		@include desktop-1024 {
-			padding: 30px 0 30px 30px;
+			padding: 0 30px;
+			// padding: 30px 0 30px 30px;
 			width: 490px;
 			line-height: 20px;
 			color: #424141;
@@ -865,7 +886,14 @@ export default {
 				height: 8px;
 				border-radius: 50%;
 				background: $nav_bg_mobile;
-			}
+                        }
+                        &_hide-list-item-description {
+				// height: 0;
+				// line-height: 0;
+				// padding: 0;
+				// transform: translateY(-45px);
+                                opacity: 0;
+                        }
 			&_hide-description {
 				display: none;
 			}
