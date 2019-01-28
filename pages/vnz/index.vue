@@ -1,11 +1,11 @@
 <template>
 	<div class="b-main-content" @wheel="wheel"
-                        v-bind:class="{'b-main-content_hide-bg': this.isContainerActive }"
-                >
+            v-bind:class="{'b-main-content_hide-bg': this.isContainerActive }"
+        >
 		<navbarpatent/>
 		<div class="b-content-left"
-                                v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
-                        >
+            v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
+            >
 			<div class="b-content-left__info-block">
 				<nuxt-link to="/">
 					<span class="b-content-left__logo">
@@ -15,25 +15,25 @@
 				<h1 class="b-content-left__header">{{ subTitle }}</h1>
 				<p class="b-content-left__need-docs">{{ description }}</p>
 				<div class="b-content-left__wheel-arrows"
-                                                v-bind:class="{'b-content-left__wheel-arrows_hide-wheel-arrows': this.isContainerActive }"
-                                        >
+                    v-bind:class="{'b-content-left__wheel-arrows_hide-wheel-arrows': this.isContainerActive }"
+                    >
 				</div>
 			</div>
 		</div>
 		<div class="b-content"
 			v-bind:class="{'b-content_dominate': this.isContainerActive }">
 			<div class="b-content__container"
-                                        v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
-                                >
+                v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
+                >
 			        <h1 class="b-content__header">{{ subTitle }}</h1>
-				<ul
-					v-bind:class="[ !listBySlider ? {'b-content__list-right-scroll':  !listBySlider} : {'b-content__list':  listBySlider} ]"
+				<ul class="b-content__list"
+					v-bind:class="{'b-content__list_hide-content-list': !listBySlider}"
 				>
 					<li 
 						class="b-content__list-item"
 						v-for="( item, index ) in contentData()"
 						:key="item.title"
-                                                v-bind:class="[ { 'b-content__list-item_opacity ': !item.isHidden } ]"
+                        v-bind:class="[ { 'b-content__list-item_opacity ': !item.isHidden } ]"
 					>
 						<p class="b-content__list-item-title">
 							<span>{{ index + 1 }}.</span>
@@ -55,38 +55,42 @@
 						</div>
 					</li>
 				</ul>
-				<!-- <ul
-					v-bind:class="[ !listBySlider ? {'b-content__list-right-scroll':  !listBySlider} : {'b-content__list':  listBySlider} ]"
+				<ul 					
+					v-bind:class="[ 
+						!listByDefault
+						? {'b-content__list-default': !listByDefault} 
+						: {'b-content__list-default_show-content-list-default': listByDefault } 
+					]"
 				>
 					<li 
-						class="b-content__list-item"
+						class="b-content__list-item-default"
 						v-for="( item, index ) in contentData()"
 						:key="item.title"
-						v-bind:class="[ 
-							listBySlider
-							? { 'b-content__list-item_hide ': !item.isHidden } 
-							: { 'b-content__list-item_column ': !listBySlider }
-						]"
 					>
-						<p class="b-content__list-item-title">
+						<p class="b-content__list-item-title-default">
 							<span>{{ index + 1 }}.</span>
 							{{ item.title }}
 						</p>
-						<p
-                                                         v-if="item.description"
-                                                         class="b-content__list-item-description"
-                                                        >
-							 {{ item.description }}
-						 </p>
+						<div class="b-content__list-item-description-wrapper-default"
+							
+							>
+							<p
+								v-if="item.description"
+								class="b-content__list-item-description-default"
+								
+								>
+								{{ item.description }}
+							</p>
+						</div>
 					</li>
-				</ul> -->
+				</ul>
 				<div class="b-content__counter"
-                                                v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
+                    v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
                                         >
 					{{ contentCounter  }} / {{ this.contentArray.length }}
 				</div>
 				<div class="b-content__arrows-wrapper"
-                                                v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
+                    v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
                                         >
 					<div class="b-content__arrow-up"
 						@click="counterDown()"
@@ -105,16 +109,15 @@
 						v-for="( item, index ) in contentData()"
 						:key="item.tiposition"
 						v-bind:class="{'b-content__circle-item_show': item.isHidden}"
-						
 						@click="counterIndex( index )"
 					>
 					</div>
 				</div>
 				<div 
-                                                class="b-content__view-switchers"
-                                                v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
-                                                @click="changeContentView()"
-                                        >
+                    class="b-content__view-switchers"
+                    v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
+                    @click="changeContentView()"
+                    >
 					<div class="b-content__view-popup">
 						Показать полный вид списком
 					</div>
@@ -122,20 +125,20 @@
 					<div
 						class="b-content__view-slider"
 						v-bind:class="{'b-content__view-slider_disactive': !this.listBySlider }"
-					>
+						>
 						<span class="b-content__view-line"></span>
 					</div>
 					<div
 						class="b-content__view-column"
 						v-bind:class="{'b-content__view-column_active': !this.listBySlider }"
-					>
+						>
 						<span class="b-content__view-line b-content__view-line_type-columns"></span>
 					</div>
 				</div>
 				<div class="b-content__return-view"
-                                                v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
-                                                @click="returnDefaultContentView()"
-                                        >	
+                    v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
+                    @click="returnDefaultContentView()"
+                    >	
 					<span class="b-content__return-view-span"></span>
 					<div class="b-content__return-view-popup">Вернуть компактный вид</div>
 				</div>
@@ -166,12 +169,12 @@ export default {
 			isContainerActive: false,
 			returnSliderView: false,
 			isHideCircles: false,
-                        listBySlider: true,
-                        leftColStyles: { },
+            listBySlider: true,
+            listByDefault: false,
 			contentArray: [
 				{
 					title: 'Заявление',
-					description: '( приложение №1 к Административному регламенту ) в двух экземплярах',
+					description: '(приложение №1 к Административному регламенту) в двух экземплярах',
 					isHidden: false,
 					position: 0
 				},
@@ -216,24 +219,24 @@ export default {
 	},
 	methods: {
 		counterUp() {
-                        let activeArray    = this.activeContentArray
+            let activeArray  = this.activeContentArray
 			let defaultArray =  this.contentArray
 
 			this.contentCounter++
 
 			if(  this.contentCounter >= defaultArray.length ) {
-					this.contentCounter = defaultArray.length 
+				this.contentCounter = defaultArray.length 
 			}  
 			defaultArray[ this.contentCounter - 1 ].isHidden = true
 			
 		},
 		counterDown() {
-			let activeArray    = this.activeContentArray
+			let activeArray  = this.activeContentArray
 			let defaultArray =  this.contentArray
 			this.contentCounter--
 
 			if(  this.contentCounter <= 0 ) {
-					this.contentCounter = 0
+				this.contentCounter = 0
 			}
 			defaultArray[ this.contentCounter ].isHidden = false
 		},
@@ -271,6 +274,7 @@ export default {
 		},
 		changeContentView() {
 			this.isHideViewSwitcher = true
+			this.listBySlider = false
 			// this.isHideCircles = true
 			setTimeout( () => 
 				this.isHideCounterBlock = true
@@ -282,14 +286,16 @@ export default {
 				this.isContainerActive = true
 			, 900 );
 			setTimeout( () => 
-				this.listBySlider = false
-			, 900 );
-			setTimeout( () => 
 				this.returnSliderView = true
 			, 1400 );
+			setTimeout( () => 
+				this.listByDefault = true
+			, 1600 );
 
 		},
 		returnDefaultContentView() {
+
+			this.listByDefault = false
 
 			setTimeout( () => 
 				this.returnSliderView = false
@@ -788,17 +794,41 @@ export default {
 		padding: 0 30px;
 		@include desktop-1024 {
 			overflow-y: scroll;
-			// overflow: hidden;
 			height: inherit;
-			margin-top: 100px;
-			position: relative;
-			// height: 450px;
-			// min-height: 150px;
-                        // max-height: 650px;
-                        // display: flex;
-                        // flex-direction: column;
-			// justify-content: flex-end;
+			top: 100px;
+			position: absolute;
+			transition: $transition_default ease-in;
+			padding-bottom: 165px;
+			&_hide-content-list {
+				opacity: 0;
+				visibility: hidden;
+				top: 140px;
+
+			}
 		}
+	}
+	&__list-default {
+		display: none;
+		@include desktop-1024 {
+			opacity: 0;
+			visibility: hidden;
+			height: inherit;
+			top: 100px;
+			left: 35px;
+			position: absolute;
+			transition: $transition_default ease-in;
+			&_show-content-list-default {
+				opacity: 1;
+				visibility: visible;
+				position: absolute;
+				overflow-y: scroll;
+				height: inherit;
+				top: 100px;
+				left: 35px;
+				padding-bottom: 165px;
+				transition: $transition_default ease-in;
+			}
+		}	
 	}
 	&__list-right-scroll {
 		margin-top: 30px;
@@ -817,22 +847,22 @@ export default {
 		padding: 15px 0;
 		transition:  1.5s  ease-in;
 		@include desktop-1024 {
-                        position: relative;
+            position: relative;
 			&_opacity {
-                                // filter: opacity(30%);
+                // filter: opacity(30%);
 			}
 			&_column {
 				position: relative;
 			}
 		}
-        }
+    }
 	&__list-item-title {
 		position: relative;
 		padding-left: 15px;
 		font-weight: bold;
 		@include desktop-1024 {
 			width: 490px;
-                        padding-left: 30px;
+           	padding-left: 30px;
 			transition:  all 1s ease-in;
 		}
 		&:before {
@@ -906,6 +936,41 @@ export default {
 			&_hide-description {
 				display: none;
 			}
+		}
+	}
+	&__list-item-default{
+		padding: 15px 0;
+		transition: 1.5s ease-in;
+		@include desktop-1024 {
+            position: relative;
+			margin-right: 80px;
+		}
+    }
+	&__list-item-title-default {
+		@include desktop-1024 {
+			width: 550px;
+           	padding-left: 30px;
+			transition:  all 1s ease-in;
+		}
+	}
+	&__list-item-description-wrapper-default {
+		@include desktop-1024 {
+			max-height: 100em;
+			overflow: hidden;
+			transition: all 1.2s ease-in-out;
+			&_hide-list-item-description-wrapper {
+				max-height: 0;
+			}
+		}
+	}
+	&__list-item-description-default {
+		@include desktop-1024 {
+			padding: 10px 30px 0 30px;
+			width: 550px;
+			line-height: 20px;
+			font-size: 16px;
+			color: #424141;
+			text-indent: 0;
 		}
 	}
 	&__circle {

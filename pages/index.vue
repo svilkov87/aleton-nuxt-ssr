@@ -9,7 +9,7 @@
 				</span>
 			</nuxt-link>
 			<div class="b-content-left__info-block">
-									<div class="b-content-left__contacts-close"
+					<div class="b-content-left__contacts-close"
 						@click="hideContacts()"
 						v-bind:class="{'b-content-left__contacts-close_show-contacts-close': this.isShowContactsClose }"
 					>
