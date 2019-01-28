@@ -93,7 +93,7 @@ export default {
 					time: 200
 				},
 				{
-					title: 'Работаем с физическими лицами, по безналичному расчету',
+					title: 'Работаем с физическими и юридическими лицами, за наличный и безналичный расчет',
 					defaultClass: 'b-nav__cash-term',
 					fadeClass: 'b-nav__cash-term_fade',
 					isVisible: true,

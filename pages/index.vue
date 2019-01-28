@@ -56,7 +56,7 @@ export default {
 		return {
 			title: 'Алетон',
 			subTitle: 'ПОМОЩЬ В ОФОРМЛЕНИИ ДОКУМЕНТОВ ДЛЯ ИНОСТРАННЫХ ГРАЖДАН',
-			description: 'Работаем с физическими лицами, по безналичному расчету',
+			description: 'Работаем с физическими и юридическими лицами, за наличный и безналичный расчет',
 			isShowContacts: false,
 			moveRightInfoblock: false,
 			isShowContactsList: false,
