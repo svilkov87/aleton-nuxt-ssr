@@ -224,7 +224,7 @@ export default {
 	z-index: 999;
 	// transition-delay: 6s;
 	@include desktop-1024 {
-		top: -560px;
+		top: -750px;
 		height: 100vh;
 		width: 100%;
 		align-items: center;
