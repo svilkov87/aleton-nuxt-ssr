@@ -242,7 +242,7 @@ export default {
 		},
 		wheel (ev) {
 
-                        // let activeArray    = this.activeContentArray
+            // let activeArray    = this.activeContentArray
 			// let defaultArray =  this.contentArray
 
 			// if ( this.listBySlider ) {

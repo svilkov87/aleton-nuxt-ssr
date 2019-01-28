@@ -1,11 +1,11 @@
 <template>
 	<div class="b-main-content" @wheel="wheel"
-		v-bind:class="{'b-main-content_hide-bg': this.isContainerActive }"
-	>
+            v-bind:class="{'b-main-content_hide-bg': this.isContainerActive }"
+        >
 		<navbarpatent/>
 		<div class="b-content-left"
-			v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
-		>
+            v-bind:class="{'b-content-left_tiny': this.isContainerActive }"
+            >
 			<div class="b-content-left__info-block">
 				<nuxt-link to="/">
 					<span class="b-content-left__logo">
@@ -15,51 +15,83 @@
 				<h1 class="b-content-left__header">{{ subTitle }}</h1>
 				<p class="b-content-left__need-docs">{{ description }}</p>
 				<div class="b-content-left__wheel-arrows"
-					v-bind:class="{'b-content-left__wheel-arrows_hide-wheel-arrows': this.isContainerActive }"
-				>
+                    v-bind:class="{'b-content-left__wheel-arrows_hide-wheel-arrows': this.isContainerActive }"
+                    >
 				</div>
 			</div>
 		</div>
 		<div class="b-content"
 			v-bind:class="{'b-content_dominate': this.isContainerActive }">
 			<div class="b-content__container"
-				v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
-			>
-			<h1 class="b-content__header">{{ subTitle }}</h1>
-				
-				<ul
-					v-bind:class="[ !listBySlider ? {'b-content__list-right-scroll':  !listBySlider} : {'b-content__list':  listBySlider} ]"
+                v-bind:class="{'b-content__container_active-container': this.isContainerActive }"
+                >
+			        <h1 class="b-content__header">{{ subTitle }}</h1>
+				<ul class="b-content__list"
+					v-bind:class="{'b-content__list_hide-content-list': !listBySlider}"
 				>
 					<li 
 						class="b-content__list-item"
 						v-for="( item, index ) in contentData()"
 						:key="item.title"
-						v-bind:class="[ 
-							listBySlider
-							? { 'b-content__list-item_hide ': !item.isVisible } 
-							: { 'b-content__list-item_column ': !listBySlider }
-						]"
+                        v-bind:class="[ { 'b-content__list-item_opacity ': !item.isHidden } ]"
 					>
 						<p class="b-content__list-item-title">
 							<span>{{ index + 1 }}.</span>
 							{{ item.title }}
 						</p>
-						<p
-							v-if="item.description"
-						 	class="b-content__list-item-description"
-						>
-							 {{ item.description }}
-						 </p>
+						<div class="b-content__list-item-description-wrapper"
+							v-bind:class="[ { 'b-content__list-item-description-wrapper_hide-list-item-description-wrapper': !item.isHidden } ]"
+							>
+							<p
+								v-if="item.description"
+								class="b-content__list-item-description"
+								v-bind:class="[ 
+									{ 'b-content__list-item-description_hide-list-item-description ': !item.isHidden } 
+								]"
+								
+								>
+								{{ item.description }}
+							</p>
+						</div>
+					</li>
+				</ul>
+				<ul 					
+					v-bind:class="[ 
+						!listByDefault
+						? {'b-content__list-default': !listByDefault} 
+						: {'b-content__list-default_show-content-list-default': listByDefault } 
+					]"
+				>
+					<li 
+						class="b-content__list-item-default"
+						v-for="( item, index ) in contentData()"
+						:key="item.title"
+					>
+						<p class="b-content__list-item-title-default">
+							<span>{{ index + 1 }}.</span>
+							{{ item.title }}
+						</p>
+						<div class="b-content__list-item-description-wrapper-default"
+							
+							>
+							<p
+								v-if="item.description"
+								class="b-content__list-item-description-default"
+								
+								>
+								{{ item.description }}
+							</p>
+						</div>
 					</li>
 				</ul>
 				<div class="b-content__counter"
-					v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
-				>
-					{{ contentCounter + 1 }} / {{ this.contentArray.length }}
+                    v-bind:class="{'b-content__counter_hide-counter-block': this.isHideCounterBlock }"
+                                        >
+					{{ contentCounter  }} / {{ this.contentArray.length }}
 				</div>
 				<div class="b-content__arrows-wrapper"
-					v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
-				>
+                    v-bind:class="{'b-content__arrows-wrapper_hide-arrows-wrapper': this.isHideArrows }"
+                                        >
 					<div class="b-content__arrow-up"
 						@click="counterDown()"
 					>
@@ -76,16 +108,16 @@
 					<div class="b-content__circle-item"
 						v-for="( item, index ) in contentData()"
 						:key="item.tiposition"
-						v-bind:class="{'b-content__circle-item_show': item.isVisible }"
+						v-bind:class="{'b-content__circle-item_show': item.isHidden}"
 						@click="counterIndex( index )"
 					>
 					</div>
 				</div>
 				<div 
-					class="b-content__view-switchers"
-					v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
-					@click="changeContentView()"
-				>
+                    class="b-content__view-switchers"
+                    v-bind:class="{'b-content__view-switchers_hide-view-switchers': this.isHideViewSwitcher }"
+                    @click="changeContentView()"
+                    >
 					<div class="b-content__view-popup">
 						Показать полный вид списком
 					</div>
@@ -93,20 +125,20 @@
 					<div
 						class="b-content__view-slider"
 						v-bind:class="{'b-content__view-slider_disactive': !this.listBySlider }"
-					>
+						>
 						<span class="b-content__view-line"></span>
 					</div>
 					<div
 						class="b-content__view-column"
 						v-bind:class="{'b-content__view-column_active': !this.listBySlider }"
-					>
+						>
 						<span class="b-content__view-line b-content__view-line_type-columns"></span>
 					</div>
 				</div>
 				<div class="b-content__return-view"
-					v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
-					@click="returnDefaultContentView()"
-				>	
+                    v-bind:class="{'b-content__return-view_show-return-view': this.returnSliderView }"
+                    @click="returnDefaultContentView()"
+                    >	
 					<span class="b-content__return-view-span"></span>
 					<div class="b-content__return-view-popup">Вернуть компактный вид</div>
 				</div>
@@ -114,7 +146,6 @@
 		</div>
 	</div>
 </template>
-
 <script>
 import Navbarpatent from '~/components/Navbarpatent.vue'
 import Copyright from '~/components/Copyright.vue'
@@ -138,7 +169,8 @@ export default {
 			isContainerActive: false,
 			returnSliderView: false,
 			isHideCircles: false,
-			listBySlider: true,
+            listBySlider: true,
+            listByDefault: false,
 			contentArray: [
 				{
 					title: 'Заявление о выдаче патента',
@@ -193,71 +225,53 @@ export default {
 	},
 	methods: {
 		counterUp() {
+            let activeArray  = this.activeContentArray
+			let defaultArray =  this.contentArray
+
 			this.contentCounter++
 
-			if( this.contentCounter >= this.contentArray.length - 1 ) {
-			this.contentCounter = this.contentArray.length - 1
-			}
-
-			if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-			this.contentArray[ this.contentCounter ].isVisible = true
-			} 
-			if ( this.contentCounter - 1 == this.contentArray[ this.contentCounter - 1 ].position ) {
-			this.contentArray[ this.contentCounter - 1 ].isVisible = false   
-			}
+			if(  this.contentCounter >= defaultArray.length ) {
+				this.contentCounter = defaultArray.length 
+			}  
+			defaultArray[ this.contentCounter - 1 ].isHidden = true
+			
 		},
 		counterDown() {
+			let activeArray  = this.activeContentArray
+			let defaultArray =  this.contentArray
 			this.contentCounter--
 
-			if( this.contentCounter <= 0 ) {
+			if(  this.contentCounter <= 0 ) {
 				this.contentCounter = 0
-				this.contentArray[ this.contentCounter ].isVisible = true
 			}
-
-			if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-				this.contentArray[ this.contentCounter ].isVisible = true
-			} 
-			if ( this.contentCounter + 1 == this.contentArray[ this.contentCounter + 1 ].position ) {
-				this.contentArray[ this.contentCounter + 1 ].isVisible = false   
-			}
+			defaultArray[ this.contentCounter ].isHidden = false
 		},
 		wheel (ev) {
-			if (this.listBySlider) {
-				if (ev.deltaY >  0) {
-					this.pos = 'вверх' 
-					console.log( this.pos )
-					this.contentCounter++
 
-					if( this.contentCounter >= this.contentArray.length - 1 ) {
-					this.contentCounter = this.contentArray.length - 1
-					}
+            // let activeArray    = this.activeContentArray
+			// let defaultArray =  this.contentArray
 
-					if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-					this.contentArray[ this.contentCounter ].isVisible = true
-					} 
-					if ( this.contentCounter - 1 == this.contentArray[ this.contentCounter - 1 ].position ) {
-					this.contentArray[ this.contentCounter - 1 ].isVisible = false   
-					}
+			// if ( this.listBySlider ) {
+			// 	if ( ev.deltaY <  0 ) {
 
-				} 
-				else {
-					this.contentCounter--
-					this.pos = 'вниз'
-					console.log( this.pos )
+			// 		this.contentCounter++
 
-					if( this.contentCounter <= 0 ) {
-						this.contentCounter = 0
-						this.contentArray[ this.contentCounter ].isVisible = true
-					}
+			// 		if(  this.contentCounter >= defaultArray.length ) {
+			// 		         this.contentCounter = defaultArray.length 
+			// 		}  
+			// 		defaultArray[ this.contentCounter - 1 ].isHidden = true
+			// 	} 
+			// 	else {		
 
-					if ( this.contentCounter == this.contentArray[ this.contentCounter ].position  ){
-						this.contentArray[ this.contentCounter ].isVisible = true
-					} 
-					if ( this.contentCounter + 1 == this.contentArray[ this.contentCounter + 1 ].position ) {
-						this.contentArray[ this.contentCounter + 1 ].isVisible = false   
-					}
-				}	
-			}
+			// 		this.contentCounter--
+
+			// 		if(  this.contentCounter <= 0 ) {
+			// 		         this.contentCounter = 0
+			// 		}
+			// 		defaultArray[ this.contentCounter ].isHidden = false
+
+			// 	}	
+			// }
 		},
 		contentData(){
 			return this.contentArray
@@ -266,6 +280,7 @@ export default {
 		},
 		changeContentView() {
 			this.isHideViewSwitcher = true
+			this.listBySlider = false
 			// this.isHideCircles = true
 			setTimeout( () => 
 				this.isHideCounterBlock = true
@@ -277,14 +292,16 @@ export default {
 				this.isContainerActive = true
 			, 900 );
 			setTimeout( () => 
-				this.listBySlider = false
-			, 900 );
-			setTimeout( () => 
 				this.returnSliderView = true
 			, 1400 );
+			setTimeout( () => 
+				this.listByDefault = true
+			, 1600 );
 
 		},
 		returnDefaultContentView() {
+
+			this.listByDefault = false
 
 			setTimeout( () => 
 				this.returnSliderView = false
@@ -347,9 +364,11 @@ export default {
 .b-content-left {
 	display: none;
 	@include desktop-1024 {
-		position: absolute;
+		// position: absolute;
+		position: fixed;
 		top: 0;
 		left: 0;
+		bottom: 0;
 		width: 50%;
 		height: 100vh;
 		display: flex;
@@ -376,6 +395,7 @@ export default {
     		margin-bottom: 50px;
 	}
 	&__header {
+                width: 230px;
 		margin-bottom: 30px;
 		letter-spacing: 2px;
 	}
@@ -424,20 +444,20 @@ export default {
 	&__container {
 		position: relative;
 		@include desktop-1024 {
-			position: relative;
+			position: fixed;
 			margin-left: -50px;
 			width: 652px;
-			height: 475px;
-			padding: 20px;
+			// height: 640px;
+			height: 100vh;
 			background: #fff;
 			box-shadow: 20px 10px 100px rgba(0, 0, 0, 0.25);
 			transition:  $transition_default ease-in;
 			&_active-container {
-				padding: 150px 20px 0 20px;
+				// padding: 150px 20px 0 20px;
 				margin-left: 0;
-				top: 0;
-				right: 0;
-   				width: 100%;
+				// top: 0;
+				// right: 0;
+   				width: 60%;
 				height: 100vh;
 			}
 		}
@@ -451,7 +471,8 @@ export default {
 			position: absolute;
 			line-height: 114px;
 			text-align: center;
-			width: 138px;
+			font-weight: bold;
+			width: 114px;
 			height: 114px;
 			left: -90px;
 			bottom: 100px;
@@ -475,7 +496,7 @@ export default {
 			width: 90px;
 			height: 160px;
 			right: -70px;
-			top: 50px;
+			top: 190px;
 			background: #FFFFFF;
 			box-shadow: 5px 20px 50px rgba(0, 0, 0, 0.25);
 			transition:  $transition_default ease-in;
@@ -534,8 +555,8 @@ export default {
 			visibility: visible;
 			display: flex;
 			position: absolute;
-			top: 0;
-			right: 0;
+			top: 130px;
+			right: -25px;
 			cursor: pointer;
 			transition:  $transition_default ease-out;
 			&:before {
@@ -551,7 +572,7 @@ export default {
 				transition:  all $transition_default ease-out;
 			}
 			&_hide-view-switchers {
-				top: -10px;
+				top: 115px;
 				opacity: 0;
 				visibility: hidden;
 				&:before {
@@ -778,52 +799,77 @@ export default {
 	&__list {
 		padding: 0 30px;
 		@include desktop-1024 {
-			margin-top: 30px;
-			position: relative;
-			min-height: 150px;
-			max-height: 550px;
-			// overflow-y: scroll;
+			overflow-y: scroll;
+			height: inherit;
+			top: 100px;
+			position: absolute;
+			transition: $transition_default ease-in;
+			padding-bottom: 165px;
+			&_hide-content-list {
+				opacity: 0;
+				visibility: hidden;
+				top: 140px;
+
+			}
 		}
+	}
+	&__list-default {
+		display: none;
+		@include desktop-1024 {
+			opacity: 0;
+			visibility: hidden;
+			height: inherit;
+			top: 100px;
+			left: 35px;
+			position: absolute;
+			transition: $transition_default ease-in;
+			&_show-content-list-default {
+				opacity: 1;
+				visibility: visible;
+				position: absolute;
+				overflow-y: scroll;
+				height: inherit;
+				top: 100px;
+				left: 35px;
+				padding-bottom: 165px;
+				transition: $transition_default ease-in;
+			}
+		}	
 	}
 	&__list-right-scroll {
 		margin-top: 30px;
 		padding: 0 30px;
 		@include desktop-1024 {
-			padding: 0;
+			// padding: 0;
+			margin-top: 100px;
 			position: relative;
-			min-height: 150px;
-			max-height: 550px;
+			// min-height: 150px;
+			// max-height: 550px;
 			overflow-y: scroll;
 
 		}
 	}
 	&__list-item{
 		padding: 15px 0;
-		// padding: 15px;
-		transition:  $transition_default ease-in;
+		transition:  1.5s  ease-in;
 		@include desktop-1024 {
-			position: absolute;
-			padding: 15px;
-			top: 0;
-			left: 0;
-			&_hide {
-				color: #fff;
-				top: 30px;
-				opacity: 0;
-				visibility: hidden;
+            position: relative;
+			&_opacity {
+                // filter: opacity(30%);
 			}
 			&_column {
 				position: relative;
 			}
 		}
-	}
+    }
 	&__list-item-title {
 		position: relative;
 		padding-left: 15px;
 		font-weight: bold;
 		@include desktop-1024 {
 			width: 490px;
-			padding-left: 30px;
+           	padding-left: 30px;
+			transition:  all 1s ease-in;
 		}
 		&:before {
 			content: '';
@@ -839,12 +885,24 @@ export default {
 			}
 		}
 	}
+	&__list-item-description-wrapper {
+		@include desktop-1024 {
+			max-height: 100em;
+			overflow: hidden;
+			// transition: max-height 1.2s;
+			transition: all 1.2s ease-in-out;
+			&_hide-list-item-description-wrapper {
+				max-height: 0;
+			}
+		}
+	}
 	&__list-item-description {
 		position: relative;
 		padding-top: 15px;
 		padding-left: 10px;
 		text-indent: 17px;
-		transition:  $transition_default ease-in;
+		// transition:  $transition_default ease-in;
+		transition:  all 1s ease-in;
 		&:before {
 			content: '';
 			position: absolute;
@@ -856,9 +914,11 @@ export default {
 			background: $nav_bg_mobile;
 		}
 		@include desktop-1024 {
-			padding: 30px 0 30px 30px;
+			padding: 10px 30px 0 30px;
+			// padding: 30px 0 30px 30px;
 			width: 490px;
 			line-height: 20px;
+			font-size: 16px;
 			color: #424141;
 			text-indent: 0;
 			&:before {
@@ -871,10 +931,52 @@ export default {
 				height: 8px;
 				border-radius: 50%;
 				background: $nav_bg_mobile;
-			}
+                        }
+                        &_hide-list-item-description {
+				// height: 0;
+				// line-height: 0;
+				// padding: 0;
+				// transform: translateY(-45px);
+                                opacity: 0;
+                        }
 			&_hide-description {
 				display: none;
 			}
+		}
+	}
+	&__list-item-default{
+		padding: 15px 0;
+		transition: 1.5s ease-in;
+		@include desktop-1024 {
+            position: relative;
+			margin-right: 80px;
+		}
+    }
+	&__list-item-title-default {
+		@include desktop-1024 {
+			width: 550px;
+           	padding-left: 30px;
+			transition:  all 1s ease-in;
+		}
+	}
+	&__list-item-description-wrapper-default {
+		@include desktop-1024 {
+			max-height: 100em;
+			overflow: hidden;
+			transition: all 1.2s ease-in-out;
+			&_hide-list-item-description-wrapper {
+				max-height: 0;
+			}
+		}
+	}
+	&__list-item-description-default {
+		@include desktop-1024 {
+			padding: 10px 30px 0 30px;
+			width: 550px;
+			line-height: 20px;
+			font-size: 16px;
+			color: #424141;
+			text-indent: 0;
 		}
 	}
 	&__circle {
@@ -884,12 +986,12 @@ export default {
 			opacity: 1;
 			visibility: visible;
 			display: flex;
+			flex-direction: column;
 			position: absolute;
-			bottom: 13px;
-			left: 15px;
+			top: 390px;
+			right: 15px;
 			transition:  $transition_default ease-in;
 			&_hide-circle {
-				// transform: translateY(40px);
 				opacity: 0;
 				visibility: hidden;
 			}
@@ -900,26 +1002,17 @@ export default {
 		background: #ccc;
 		margin-right: 15px;
 		transition: all .5s;
-		width: 4px;
-		height: 4px;
+		margin-bottom: 10px;
+		width: 15px;
+		height: 15px;
 		background: #FFFFFF;
 		border: 1px solid #1F4866;
 		box-sizing: border-box;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		&_show {
 			position: relative;
-			background: #9E0202;
+			background: $nav_bg;
 			border: none;
-			transform: scale(3);
-			// &:after {
-			// 	content: '';
-			// 	position: absolute;
-			// 	width: 15px;
-			// 	height: 1px;
-			// 	top: 4px;
-			// 	right: -20px;
-			// 	background: $nav_bg;
-			// }
 		}
 	}
 }

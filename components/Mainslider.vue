@@ -60,7 +60,7 @@
 					{
 						text: 'Гражданство',
 						advantages: 'Описание данной услуги с преимуществами',
-						url: '/vnz',
+						url: '/citizenship',
 						position: 4,
 						visible: false,
 						buttonText: 'Перейти в раздел'

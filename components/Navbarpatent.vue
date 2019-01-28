@@ -562,13 +562,16 @@ export default {
 			content: '';
 			opacity: 0;
 			position: absolute;
-			top: 32px;
+			top: 15px;
 			left: -15px;
 			width: 5px;
 			height: 5px;
 			border-radius: 50%;
 			background: #fff;
 			transition: all $transition_default ease-in-out;
+			@include desktop-1024 {
+				top: 32px;
+			}
 		}
 		&:hover::before {
 			opacity: 1;
