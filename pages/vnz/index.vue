@@ -980,12 +980,12 @@ export default {
 			opacity: 1;
 			visibility: visible;
 			display: flex;
+			flex-direction: column;
 			position: absolute;
-			bottom: 13px;
-			left: 15px;
+			top: 390px;
+			right: 15px;
 			transition:  $transition_default ease-in;
 			&_hide-circle {
-				// transform: translateY(40px);
 				opacity: 0;
 				visibility: hidden;
 			}
@@ -996,17 +996,17 @@ export default {
 		background: #ccc;
 		margin-right: 15px;
 		transition: all .5s;
-		width: 4px;
-		height: 4px;
+		margin-bottom: 10px;
+		width: 15px;
+		height: 15px;
 		background: #FFFFFF;
 		border: 1px solid #1F4866;
 		box-sizing: border-box;
 		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 		&_show {
 			position: relative;
-			background: #9E0202;
+			background: $nav_bg;
 			border: none;
-			transform: scale(3);
 		}
 	}
 }
