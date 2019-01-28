@@ -15,6 +15,12 @@
 					{{ item.text }}
 				</nuxt-link>
 			</div>
+			<ul class="b-slider__contacts-list">
+				<li class="b-slider__contacts-list-item">603 070 г. Нижний Новгород</li>
+				<li class="b-slider__contacts-list-item">Ул. Мануфактурная, 12</li>
+				<li class="b-slider__contacts-list-item">+7 999 136 38 36</li>
+				<li class="b-slider__contacts-list-item">+7 999 136 12 55</li>
+			</ul>
 		</div>
 	</div>
 </template>
@@ -130,7 +136,6 @@
 		@include desktop-1024 {
 			min-width: 430px;
 			max-width: 430px;
-			color: #d2d2d2;
 		}
 	}
 	&__wrapper {
@@ -140,6 +145,7 @@
 		align-items: center;
 		@include desktop-1024 {
 			margin-left: 100px;
+			align-items: flex-start;
 		}
 	}
 	&__grid-item {
@@ -163,12 +169,15 @@
 			transition:  $transition_default ease-in;
 			@include desktop-1024 {
 				top: 15px;
+				right: 0;
+				left: unset;
 			}
 		}
 		
 		@include desktop-1024 {
 			color: #000;
 			line-height: 40px;
+			padding-left: 0;
 			transition:  all .2s ease-in-out;
 		}
 		&:hover {
@@ -201,6 +210,8 @@
 				border: none;
 				@include desktop-1024 {
 					top: 15px;
+					right: -2px;
+					left: unset;
 				}
 			}
 		}
@@ -209,6 +220,17 @@
 		position: absolute;
 		top: 0;
 		left: 15px;
+	}
+	&__contacts-list {
+		margin-left: 30px;
+    	padding-top: 10px;
+		@include desktop-1024 {
+			margin-left: 100px;
+			padding-top: 50px;
+		}
+	}
+	&__contacts-list-item {
+    	margin-bottom: 15px;
 	}
 }
 </style>

@@ -168,6 +168,7 @@ export default {
 	}
 	&__contacts-block {
 		@include desktop-1024 {
+		display: none;
 		cursor: pointer;
 		position: absolute;
 		top: 402px;
